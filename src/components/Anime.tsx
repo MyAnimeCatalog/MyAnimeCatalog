@@ -1,5 +1,9 @@
 import Image from "next/image";
-import Link from 'next/link';
+import Link from "next/link";
+import { useState } from "react";
+import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
+import { IconContext } from "react-icons";
+import { api } from "~/utils/api";
 
 interface jpg{
     image_url: string
@@ -10,29 +14,56 @@ interface jpg{
   interface images{
     jpg: jpg
   }
+
+  interface anime {
+    title: string
+    title_english: string
+    images: images
+    mal_id: number
+    synopsis: string
+    rating: string
+    genres: genreObject[]
+    score: number
+    scored_by: number
+    rank: number
+  }
+
   
-  interface Anime {
-    mal_id: number;
-    rank: number;
-    title: string;
-    url: string;
-    images: images,
-    type: string;
-    episodes: number | null;
-    start_date: string;
-    end_date: string | null;
-    members: number;
-    score: number;
+  interface genreObject{
+    mal_id: number
+    type: string
+    name: string
+    url: string
   }
 
   interface animeProps{
-    anime: Anime
+    anime: anime
   }
 
 const Anime: React.FC<animeProps> = ({anime}) => {
+  const [ showModal, setShowModal ] = useState<boolean>(false);
+  const { mutate } = api.animes.addAnimeToCollection.useMutation();
+  const handleClickAdd = (collectionType: string): void => {
+    mutate({
+      titleEn: anime.title,
+      titleJP: anime.title_english,
+      image: anime.images.jpg.image_url,
+      malID: anime.mal_id.toString(),
+      synopsis: anime.synopsis,
+      rating: anime.rating,
+      genre: anime.genres[0]!.name,
+      score: anime.score,
+      scored_by: anime.scored_by,
+      rank: anime.rank,
+      collectionType: collectionType
+    })
+  }
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
   return (
-    <div className="relative group h-64 w-48" style={{ position: 'relative' }}>
+    <div className="relative group h-64 w-48">
       <Link href={`/AnimeDetailsPage/${anime.mal_id}`}>
         <Image
           src={anime.images.jpg.image_url}
@@ -40,9 +71,22 @@ const Anime: React.FC<animeProps> = ({anime}) => {
           fill = {true}
         />
         <div className="absolute h-full w-full inset-0 opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 flex-column items-start justify-start">
-          <p className="text-white font-bold object-contain">{anime.title}</p>
+          {!showModal && <p className="text-white font-bold object-contain mr-12 ml-2 mt-2">{anime.title}</p>}
         </div>
       </Link>
+      <IconContext.Provider value = {{color: "white", size: "30px" }}>
+        {showModal ? <AiOutlineClose onClick = {toggleModal} className = 'z-30 absolute top-2 right-2 shadow-lg'/> : <AiOutlineDown onClick = {toggleModal} className = 'opacity-0 group-hover:opacity-100 z-10 absolute top-2 right-2 shadow-lg'/>}
+      </IconContext.Provider>
+      {showModal && 
+        <div className = 'w-full h-1/2 opacity-80 bg-black z-20 absolute'>
+          <ul className = 'text-white py-3 px-4'>
+            <li onClick = {() => handleClickAdd('toWatch')} className = 'py-1 hover:underline hover:cursor-pointer'>Add to To Watch</li>
+            <li onClick = {() => handleClickAdd('watching')} className = 'py-1 hover:underline hover:cursor-pointer'>Add Watching</li>
+            <li onClick = {() => handleClickAdd('watched')} className = 'py-1 hover:underline hover:cursor-pointer'>Add Watched</li>
+          </ul>
+        </div>
+      }
+      
     </div>
   );
 };

@@ -15,45 +15,38 @@ interface images{
   jpg: jpg
 }
 
+type genres = genreObject[]
 
-interface anime {
-  mal_id: number;
-  rank: number;
-  title: string;
-  url: string;
-  images: images,
-  type: string;
-  episodes: number | null;
-  start_date: string;
-  end_date: string | null;
-  members: number;
-  score: number;
+interface genreObject{
+  mal_id: number
+  type: string
+  name: string
+  url: string
+}
+
+
+interface Anime {
+  title: string
+  title_english: string
+  images: images
+  mal_id: number
+  synopsis: string
+  rating: string
+  genres: genres
+  score: number
+  scored_by: number
+  rank: number
 }
 
 interface topAnimes {
   pagination: object,
-  data: anime[]
+  data: Anime[]
 }
     
 
 const Home: NextPage = () => {
-  const [ topSeasonAnimes, setTopSeasonAnimes ] = useState<anime[]>([]);
-  const { mutate } = api.animes.addAnimeToCollection.useMutation();
-  useEffect(() => {
-    mutate({
-      titleEn: 'Yo',
-      titleJP: 'Yo',
-      image: 'Yo',
-      malID: 'Yo',
-      synopsis: 'Yo',
-      rating: 'Yo',
-      genre: 'Yo',
-      score: 1,
-      scored_by: 1,
-      rank: 1,
-      collectionType: 'toWatch'
-    });
-  }, []);
+  const [ topSeasonAnimes, setTopSeasonAnimes ] = useState<Anime[]>([]);
+
 
   useEffect((): void => {
     const getTopSeasonAnimes = async (): Promise<void> => {
