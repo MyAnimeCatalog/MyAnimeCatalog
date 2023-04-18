@@ -4,40 +4,9 @@ import { useState } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
+import { type animeProps} from '../types';
 
-interface jpg {
-  image_url: string;
-  small_image_url: string;
-  large_image_url: string;
-}
 
-interface images {
-  jpg: jpg;
-}
-
-interface anime {
-  title: string;
-  title_english: string;
-  images: images;
-  mal_id: number;
-  synopsis: string;
-  rating: string;
-  genres: genreObject[];
-  score: number;
-  scored_by: number;
-  rank: number;
-}
-
-interface genreObject {
-  mal_id: number;
-  type: string;
-  name: string;
-  url: string;
-}
-
-interface animeProps {
-  anime: anime;
-}
 
 const Anime: React.FC<animeProps> = ({ anime }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
