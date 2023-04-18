@@ -6,33 +6,6 @@ import {
 } from "~/server/api/trpc";
 
 
-// interface animetype {
-//   id: string,
-//   titleEn: string
-//   titleJP: string
-//   image: string
-//   malID: string
-//   synposis: string
-//   rating: string
-//   genre: string
-//   score: number
-//   scored_by: number
-//   rank: number
-// }
-
-// const t = initTRPC.context<ctx>().create();
-
-// // First middleware -> adds anime to anime table
-// // Second middleware -> use the anime id and add that to toWatch for the user
-
-// const addAnime = t.middleware(async ({ctx, next}) => {
-//   await ctx.prisma.anime.create({
-//     data:{
-      
-//     }
-//   })
-// })
-
 export const animeRouter = createTRPCRouter({
   //Add anime to one of the three collections for a user
   addAnimeToCollection: protectedProcedure
@@ -96,7 +69,6 @@ export const animeRouter = createTRPCRouter({
         );
       }
       //Make sure user is logged in
-      console.log(anime);
       if (input.collectionType === 'toWatch'){
         return await ctx.prisma.toWatch.create({
           data: {
@@ -131,7 +103,102 @@ export const animeRouter = createTRPCRouter({
     return "you can now see this secret message!";
   }),
 
-  updateCategory: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  updateCategory: protectedProcedure
+    .input(z.object({
+      collectionType: z.string(),
+      newCollectionType: z.string(),
+      animeId: z.string(),
+      userId: z.string()
+    }))
+    .mutation( async ({ ctx, input }) => {
+      if (input.collectionType === 'toWatch'){
+        await ctx.prisma.toWatch.delete({
+          where: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });
+      }
+
+      else if (input.collectionType === 'watching'){
+        await ctx.prisma.watching.delete({
+          where: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });
+      }
+
+      else if (input.collectionType === 'watched'){
+        await ctx.prisma.watched.delete({
+          where: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });  
+      }
+      //Logic for creating the element in the new collection
+      if (input.newCollectionType === 'toWatch'){
+        return await ctx.prisma.toWatch.delete({
+          where: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });
+      }
+
+      else if (input.newCollectionType === 'watching'){
+        return await ctx.prisma.watching.delete({
+          where: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });
+      }
+
+      else if (input.newCollectionType === 'watched'){
+        return await ctx.prisma.watched.delete({
+          where: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });  
+      }
+    }),
+
+  //Method to delete from list
+  deleteFromList: protectedProcedure
+    .input(z.object({
+      collectionType: z.string(),
+      animeId: z.string(),
+      userId: z.string()
+    }))
+    .mutation( async ({ ctx, input }) => {
+      if (input.collectionType === 'toWatch'){
+        return await ctx.prisma.toWatch.create({
+          data: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });
+      }
+
+      else if (input.collectionType === 'watching'){
+        return await ctx.prisma.watching.create({
+          data: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });
+      }
+
+      else if (input.collectionType === 'watched'){
+        return await ctx.prisma.watched.create({
+          data: {
+            userId: input.userId,
+            animeId: input.animeId
+          }
+        });      
+      }
+    })
 });

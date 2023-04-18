@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Anime from "~/components/Anime";
+import { ClipLoader } from "react-spinners";
 
 import { api } from "~/utils/api";
 
@@ -74,9 +75,14 @@ const Home: NextPage = () => {
       <main className="overflow-y-auto flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pt-16">
         <h2 className="text-4xl font-extrabold tracking-tight text-white mt-6">Top Seasonal Animes</h2>
         <div className="container flex items-center justify-center gap-12 px-4 py-6 flex-wrap">
-          {topSeasonAnimes.length > 0 && topSeasonAnimes.map((anime) => (
+          {topSeasonAnimes.length > 0 ? topSeasonAnimes.map((anime) => (
             <Anime key = {anime.title} anime = {anime}/>
-          ))}
+          ))
+            :
+            <ClipLoader
+              color='white'
+            />
+          }
         </div>
       </main>
     </>

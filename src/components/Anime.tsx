@@ -63,7 +63,7 @@ const Anime: React.FC<animeProps> = ({anime}) => {
     setShowModal(!showModal);
   };
   return (
-    <div className="relative group h-64 w-48">
+    <div className="select-none relative group h-64 w-48">
       <Link href={`/AnimeDetailsPage/${anime.mal_id}`}>
         <Image
           src={anime.images.jpg.image_url}
@@ -74,15 +74,15 @@ const Anime: React.FC<animeProps> = ({anime}) => {
           {!showModal && <p className="text-white font-bold object-contain mr-12 ml-2 mt-2">{anime.title}</p>}
         </div>
       </Link>
-      <IconContext.Provider value = {{color: "white", size: "30px" }}>
-        {showModal ? <AiOutlineClose onClick = {toggleModal} className = 'z-30 absolute top-2 right-2 shadow-lg'/> : <AiOutlineDown onClick = {toggleModal} className = 'opacity-0 group-hover:opacity-100 z-10 absolute top-2 right-2 shadow-lg'/>}
+      <IconContext.Provider value = {{color: "white", size: "27px" }}>
+        {showModal ? <AiOutlineClose onClick = {toggleModal} className = 'z-30 absolute top-2 right-2 shadow-lg hover:cursor-pointer'/> : <AiOutlineDown onClick = {toggleModal} className = 'opacity-0 group-hover:opacity-100 hover:cursor-pointer z-10 absolute top-2 right-2 shadow-lg'/>}
       </IconContext.Provider>
       {showModal && 
         <div className = 'w-full h-1/2 opacity-80 bg-black z-20 absolute'>
           <ul className = 'text-white py-3 px-4'>
-            <li onClick = {() => handleClickAdd('toWatch')} className = 'py-1 hover:underline hover:cursor-pointer'>Add to To Watch</li>
-            <li onClick = {() => handleClickAdd('watching')} className = 'py-1 hover:underline hover:cursor-pointer'>Add Watching</li>
-            <li onClick = {() => handleClickAdd('watched')} className = 'py-1 hover:underline hover:cursor-pointer'>Add Watched</li>
+            <li onClick = {() => handleClickAdd('toWatch')} className = 'select-none py-1 hover:underline hover:cursor-pointer'>Add To Watch</li>
+            <li onClick = {() => handleClickAdd('watching')} className = 'select-none py-1 hover:underline hover:cursor-pointer'>Add Watching</li>
+            <li onClick = {() => handleClickAdd('watched')} className = 'select-none py-1 hover:underline hover:cursor-pointer'>Add Watched</li>
           </ul>
         </div>
       }
