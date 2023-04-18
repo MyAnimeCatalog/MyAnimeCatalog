@@ -73,7 +73,6 @@ export const animeRouter = createTRPCRouter({
             animeId: anime.id
           }
         });
-        console.log('check is,',checkAnimeCol);
         if (checkAnimeCol !== null){
           return;
         }
@@ -96,7 +95,7 @@ export const animeRouter = createTRPCRouter({
           return;
         }
       }
-      
+      //Checking the collection type and adding to the correct one
       if (input.collectionType === 'toWatch'){
         return await ctx.prisma.toWatch.create({
           data: {
@@ -136,7 +135,6 @@ export const animeRouter = createTRPCRouter({
       collectionType: z.string(),
       newCollectionType: z.string(),
       id: z.string(),
-      userId: z.string(),
       animeId: z.string()
     }))
     .mutation( async ({ ctx, input }) => {
@@ -167,7 +165,7 @@ export const animeRouter = createTRPCRouter({
       if (input.newCollectionType === 'toWatch'){
         return await ctx.prisma.toWatch.create({
           data: {
-            userId: input.userId,
+            userId: ctx.session.user.id,
             animeId: input.animeId
             
           }
@@ -177,7 +175,7 @@ export const animeRouter = createTRPCRouter({
       else if (input.newCollectionType === 'watching'){
         return await ctx.prisma.watching.create({
           data: {
-            userId: input.userId,
+            userId: ctx.session.user.id,
             animeId: input.animeId
           }
         });
@@ -186,7 +184,7 @@ export const animeRouter = createTRPCRouter({
       else if (input.newCollectionType === 'watched'){
         return await ctx.prisma.watched.create({
           data: {
-            userId: input.userId,
+            userId: ctx.session.user.id,
             animeId: input.animeId
           }
         });  

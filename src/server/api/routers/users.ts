@@ -2,28 +2,26 @@ import { z } from "zod";
 
 import {
   createTRPCRouter,
-  publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
 
 export const usersRouter = createTRPCRouter({
-  getInfo: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ( { ctx, input }) => {
+  getInfo: protectedProcedure
+    .query(async ( { ctx }) => {
       const userData = await ctx.prisma.user.findUnique({
         where: {
-          id: input.id
+          id: ctx.session.user.id
         }
       });
       return userData;
     }),
 
-  updatePicture: publicProcedure
-    .input(z.object({id: z.string(), image: z.string()}))
-    .query(async ({ ctx, input }) => {
+  updatePicture: protectedProcedure
+    .input(z.object({ image: z.string()}))
+    .query(async ({ ctx, input}) => {
       const updatedUser = await ctx.prisma.user.update({
         where: {
-          id: input.id,
+          id: ctx.session.user.id
         },
         data: {
           image: input.image,
@@ -32,12 +30,12 @@ export const usersRouter = createTRPCRouter({
       return updatedUser;
     }),
 
-  updateBio: publicProcedure
-    .input(z.object({id: z.string(), bio: z.string()}))
+  updateBio: protectedProcedure
+    .input(z.object({ bio: z.string()}))
     .query(async ({ ctx, input }) => {
       const updatedUser = await ctx.prisma.user.update({
         where: {
-          id: input.id,
+          id: ctx.session.user.id,
         },
         data: {
           bio: input.bio,
