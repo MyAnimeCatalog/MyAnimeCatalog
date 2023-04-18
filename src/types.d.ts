@@ -39,3 +39,7 @@ export interface topAnimes {
 interface animeProps {
     anime: AnimeType;
 }
+
+interface DataType{
+    data: AnimeType
+}

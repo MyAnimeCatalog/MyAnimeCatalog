@@ -243,7 +243,7 @@ const Home: NextPage = () => {
         </div>
         <section
           id="search"
-          className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] pt-16"
+          className="flex min-h-1/2 flex-col items-center justify-start pt-16"
         >
           <form
             className="flex w-4/5 flex-col items-center justify-center"
