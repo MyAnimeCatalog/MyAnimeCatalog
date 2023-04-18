@@ -49,7 +49,12 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    bio           String?
+    toWatch       ToWatch[]
+    watching      Watching[]
+    watched       Watched[]
 }
+
 
 model VerificationToken {
     identifier String
@@ -57,4 +62,43 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+} 
+
+model Anime {
+  id        String @id @default(cuid())
+  titleEn   String
+  titleJP   String
+  image     String
+  malID     String
+  synopsis  String
+  rating    String
+  genre     String
+  score     Decimal
+  scored_by Int
+  rank      Int
+  toWatch   ToWatch[]
+  watching  Watching[]
+  watched   Watched[]
+}
+
+model ToWatch {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animeId   String @unique
+  anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+}
+
+model Watching {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animes    Anime[]
+}
+
+model Watched {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animes    Anime[]
 }

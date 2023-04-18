@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Anime from "~/components/Anime";
 
+import { api } from "~/utils/api";
 
 interface jpg{
   image_url: string
@@ -37,6 +38,19 @@ interface topAnimes {
 
 const Home: NextPage = () => {
   const [ topSeasonAnimes, setTopSeasonAnimes ] = useState<anime[]>([]);
+  const { mutate } = api.animes.addAnimeToWatch.useMutation();
+  useEffect(() => {const Anime = mutate({
+    titleEn: 'Yo',
+    titleJP: 'Yo',
+    image: 'Yo',
+    malID: 'Yo',
+    synopsis: 'Yo',
+    rating: 'Yo',
+    genre: 'Yo',
+    score: 1,
+    scored_by: 1,
+    rank: 1,
+  })}, []);
 
   useEffect((): void => {
     const getTopSeasonAnimes = async (): Promise<void> => {
