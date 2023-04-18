@@ -2,6 +2,8 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
 import Anime from "~/components/Anime";
+import { ClipLoader } from "react-spinners";
+import { api } from "~/utils/api";
 
 // const DUMMY_ANIME: anime = {
 //   mal_id: 52034,
@@ -185,27 +187,35 @@ interface images {
   jpg: jpg;
 }
 
-interface anime {
+type genres = genreObject[];
+
+interface genreObject {
   mal_id: number;
-  rank: number;
-  title: string;
-  url: string;
-  images: images;
   type: string;
-  episodes: number | null;
-  start_date: string;
-  end_date: string | null;
-  members: number;
+  name: string;
+  url: string;
+}
+
+interface Anime {
+  title: string;
+  title_english: string;
+  images: images;
+  mal_id: number;
+  synopsis: string;
+  rating: string;
+  genres: genres;
   score: number;
+  scored_by: number;
+  rank: number;
 }
 
 interface topAnimes {
   pagination: object;
-  data: anime[];
+  data: Anime[];
 }
 
 const Home: NextPage = () => {
-  const [topSeasonAnimes, setTopSeasonAnimes] = useState<anime[]>([]);
+  const [topSeasonAnimes, setTopSeasonAnimes] = useState<Anime[]>([]);
   const [enteredSearch, setEnteredSearch] = useState(``);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -278,6 +288,10 @@ const Home: NextPage = () => {
             value={enteredSearch}
             ref={inputRef}
           />
+
+          <div className="container flex flex-wrap items-center justify-center gap-12 bg-white px-40 py-6 md:overflow-auto">
+            RED RED RED
+          </div>
         </form>
         <div className="container flex flex-wrap items-center justify-center gap-12 px-20 py-6 md:overflow-auto">
           {/* <Anime key={1} anime={DUMMY_ANIME} />

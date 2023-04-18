@@ -49,7 +49,12 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    bio           String?
+    toWatch       ToWatch[]
+    watching      Watching[]
+    watched       Watched[]
 }
+
 
 model VerificationToken {
     identifier String
@@ -57,4 +62,52 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+} 
+
+model Anime {
+  id        String @id @default(cuid())
+  titleEn   String @unique
+  titleJP   String
+  image     String
+  malID     String
+  synopsis  String @db.Text
+  rating    String
+  genre     String
+  score     Decimal
+  scored_by Int
+  rank      Int
+  toWatch   ToWatch[]
+  watching  Watching[]
+  watched   Watched[]
+}
+
+model ToWatch {
+  id        String @id @default(cuid())
+  userId    String 
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animeId   String 
+  anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+
+@@index([userId])
+@@index([animeId])
+}
+
+model Watching {
+  id        String @id @default(cuid())
+  userId    String 
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animeId   String 
+  anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+@@index([userId])
+@@index([animeId])
+}
+
+model Watched {
+  id        String @id @default(cuid())
+  userId    String 
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animeId   String 
+  anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+@@index([userId])
+@@index([animeId])
 }
