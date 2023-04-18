@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { type AnimeType, type topAnimes } from "~/types";
 import { ClipLoader } from "react-spinners";
 import Anime from "~/components/Anime";
-import naruto from "../../public/naruto.gif";
+// import naruto from "../../public/naruto.gif";
+// import Image from 'next/image';
 
 const WeeklySchedule: NextPage = () => {
   const [animes, setAnimes ] = useState<AnimeType[]>([]);
@@ -37,12 +38,17 @@ const WeeklySchedule: NextPage = () => {
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">Anime Showing Today</h2>
         <div className="container flex flex-wrap w-[1000px] items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
           {animes.length > 0 ? 
-            <img src={naruto} alt="Loading icon" style={{display: 'block', margin: '0 auto'}} />
+            // <img src={naruto} alt="Loading icon" style={{display: 'block', margin: '0 auto'}} />
+            // <Image src="../../public/naruto.gif" alt="Loader icon" width={100} height={100} />
+            <ClipLoader color='white'/>
             // animes.map(anime => (
             //   <Anime key = {anime.mal_id} anime = {anime}/>
             // ))
             :
-            <img src={naruto} alt="Loading icon" style={{display: 'block', margin: '0 auto'}} />
+            <ClipLoader color='white'/>
+            // <img src={naruto} alt="Loading icon" style={{display: 'block', margin: '0 auto'}} />
+            // <Image src="../../public/naruto.gif" alt="Loader icon" width={100} height={100} />
+
           }
         </div>
       </main>

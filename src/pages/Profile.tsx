@@ -15,30 +15,38 @@ const Profile: NextPage = () => {
   const watchingNum = watching ? watching.length : 0;
   const [ showImageModal, setShowImageModal ] = useState<boolean>(false);
   const [ pfpImage, setPfpImage ] = useState<string>('');
+  const [ userImage, setUserImage ] = useState<string>('');
   
   const [showBioModal, setShowBioModal] = useState<boolean>(false);
   const [bio, setBio] = useState<string>('');
   const [userBio, setUserBio] = useState<string>('');
 
-  const test = api.animes.getList.useQuery('toWatch').data
-  console.log('test data is', test)
   
-  const newBio = api.users.updateBio.useMutation().mutate;
+  const { mutate } = api.users.updateBio.useMutation();
+  const updatePicture = api.users.updatePicture.useMutation().mutate;
+
   useEffect(() => {
-    if (user && user.bio){
+    if (user && user.bio && user.image){
       setUserBio(user.bio);
-    } else setUserBio('');
+      setUserImage(user.image);
+    } else {
+      setUserBio('');
+      setUserImage('');
+    }
   }, [user]);
   
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    newBio({bio: bio}); 
+    mutate({bio: bio}); 
     setUserBio(bio);
     setShowBioModal(false);
   };
 
   const editPicture = (e: React.MouseEvent) => {
     e.preventDefault();
+    updatePicture({image: pfpImage});
+    setUserImage(pfpImage);
+    setShowImageModal(false);
     
   }
 
@@ -50,16 +58,24 @@ const Profile: NextPage = () => {
           <div className = 'mr-16'>
             <Avatar.Root className="AvatarRoot group relative">
               <Avatar.Image
-                className="AvatarImage h-64 rounded-full border-2 border-gray-700 border-transparent hover:border-current"
-                src={user.image as string}
+                className="AvatarImage h-64 rounded-full border-2 border-gray-700 border-transparent hover:border-current select-none"
+                src={userImage}
                 alt="Profile Picture"
               />
-              <div onClick = {editPicture} className="flex flex-column absolute inset-0 h-full w-full items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 rounded-full hover:pointer">
+              <div onClick = {() => setShowImageModal(!showImageModal)} className="flex flex-column absolute inset-0 h-full w-full items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 rounded-full hover:cursor-pointer">
                 <IconContext.Provider value = {{ size:'20px', color: 'rgba(255,255,255,0.7)'}}>
                   <BsPencilFill/>
                 </IconContext.Provider>
               </div>
             </Avatar.Root>
+            {showImageModal && 
+            <div className = 'z-50 top-0 right-0 flex flex-col justify-center items-center'>
+              <label>Link to Picture: </label>
+              <input type='text' className = 'text-black' onChange={(e) => setPfpImage(e.target.value)}/>
+              <button onClick = {() => setShowImageModal(false)}>Cancel</button>
+              <button onClick = {editPicture}>Submit</button>
+            </div>
+            }
             <div className = 'h-64 w-64 bg-slate-700 relative'>
               <h2 className = 'ml-2 mt-2 text-lg'>About Me:</h2>
               {showBioModal && <textarea className = 'py-3 px-3 bg-slate-600 h-[190px] w-full resize-none focus:outline-none' onChange={(e) => setBio(e.target.value)}>{userBio}</textarea>}
