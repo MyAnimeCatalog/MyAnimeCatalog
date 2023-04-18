@@ -1,9 +1,12 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
+import { api } from "~/utils/api";
 
 const Profile: NextPage = () => {
   const { data: session, status } = useSession();
-  console.log(session, status);
+  const user = api.users.getInfo.useQuery().data;
+  const watchedNum = api.animes.getList.useQuery('watched').data
+  console.log(watchedNum);
 
   return (
     <>

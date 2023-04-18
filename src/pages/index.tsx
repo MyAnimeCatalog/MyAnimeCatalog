@@ -3,7 +3,10 @@ import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
 import Anime from "~/components/Anime";
 import { ClipLoader } from "react-spinners";
-import { api } from "~/utils/api";
+import { type AnimeType, type topAnimes} from '../types';
+
+
+
 
 // const DUMMY_ANIME: anime = {
 //   mal_id: 52034,
@@ -177,45 +180,9 @@ import { api } from "~/utils/api";
 //   ],
 // };
 
-interface jpg {
-  image_url: string;
-  small_image_url: string;
-  large_image_url: string;
-}
-
-interface images {
-  jpg: jpg;
-}
-
-type genres = genreObject[];
-
-interface genreObject {
-  mal_id: number;
-  type: string;
-  name: string;
-  url: string;
-}
-
-interface Anime {
-  title: string;
-  title_english: string;
-  images: images;
-  mal_id: number;
-  synopsis: string;
-  rating: string;
-  genres: genres;
-  score: number;
-  scored_by: number;
-  rank: number;
-}
-
-interface topAnimes {
-  pagination: object;
-  data: Anime[];
-}
 
 const Home: NextPage = () => {
-  const [topSeasonAnimes, setTopSeasonAnimes] = useState<Anime[]>([]);
+  const [topSeasonAnimes, setTopSeasonAnimes] = useState<AnimeType[]>([]);
   const [enteredSearch, setEnteredSearch] = useState(``);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -264,42 +231,47 @@ const Home: NextPage = () => {
           Top Seasonal Animes
         </h2>
         <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
-          {topSeasonAnimes.length > 0 &&
+          {topSeasonAnimes.length > 0 ?
             topSeasonAnimes.map((anime) => (
               <Anime key={anime.title} anime={anime} />
-            ))}
+            ))
+            :
+            <ClipLoader
+              color = 'white'
+            />
+          }
         </div>
-      </main>
-      <section
-        id="search"
-        className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] pt-16"
-      >
-        <form
-          className="flex w-4/5 flex-col items-center justify-center"
-          action=""
-          onSubmit={handleSearchSubmit}
+        <section
+          id="search"
+          className="flex min-h-1/2 flex-col items-center justify-start pt-16"
         >
-          <input
-            className="mb-10 flex items-center justify-center rounded px-3 py-0.5"
-            type="text"
-            id="search-input"
-            placeholder="Search"
-            onChange={handleInputChange}
-            value={enteredSearch}
-            ref={inputRef}
-          />
+          <form
+            className="flex w-4/5 flex-col items-center justify-center"
+            action=""
+            onSubmit={handleSearchSubmit}
+          >
+            <input
+              className="mb-10 flex items-center justify-center rounded px-3 py-0.5"
+              type="text"
+              id="search-input"
+              placeholder="Search"
+              onChange={handleInputChange}
+              value={enteredSearch}
+              ref={inputRef}
+            />
 
-          <div className="container flex flex-wrap items-center justify-center gap-12 bg-white px-40 py-6 md:overflow-auto">
-            RED RED RED
+            <div className="container flex flex-wrap items-center justify-center gap-12 bg-white px-40 py-6 md:overflow-auto">
+              RED RED RED
+            </div>
+          </form>
+          <div className="container flex flex-wrap items-center justify-center gap-12 px-20 py-6 md:overflow-auto">
+            {/* <Anime key={1} anime={DUMMY_ANIME} />
+            <Anime key={2} anime={DUMMY_ANIME} />
+            <Anime key={3} anime={DUMMY_ANIME} />
+            <Anime key={4} anime={DUMMY_ANIME} /> */}
           </div>
-        </form>
-        <div className="container flex flex-wrap items-center justify-center gap-12 px-20 py-6 md:overflow-auto">
-          {/* <Anime key={1} anime={DUMMY_ANIME} />
-          <Anime key={2} anime={DUMMY_ANIME} />
-          <Anime key={3} anime={DUMMY_ANIME} />
-          <Anime key={4} anime={DUMMY_ANIME} /> */}
-        </div>
-      </section>
+        </section>
+      </main>
     </>
   );
 };
