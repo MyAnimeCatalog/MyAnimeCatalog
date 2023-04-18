@@ -1,7 +1,6 @@
 import { z } from "zod";
 import {
   createTRPCRouter,
-  publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
 
@@ -67,8 +66,37 @@ export const animeRouter = createTRPCRouter({
             }
           }
         );
+        //Then check if it exists in another collection, if it does we don't need to do anything.
+        let checkAnimeCol = await ctx.prisma.toWatch.findFirst({
+          where: {
+            userId: ctx.session.user.id,
+            animeId: anime.id
+          }
+        });
+        console.log('check is,',checkAnimeCol);
+        if (checkAnimeCol !== null){
+          return;
+        }
+        checkAnimeCol = await ctx.prisma.watching.findFirst({
+          where: {
+            userId: ctx.session.user.id,
+            animeId: anime.id
+          }
+        });
+        if (checkAnimeCol !== null){
+          return;
+        }
+        checkAnimeCol = await ctx.prisma.watched.findFirst({
+          where: {
+            userId: ctx.session.user.id,
+            animeId: anime.id
+          }
+        });
+        if (checkAnimeCol !== null){
+          return;
+        }
       }
-      //Make sure user is logged in
+      
       if (input.collectionType === 'toWatch'){
         return await ctx.prisma.toWatch.create({
           data: {
@@ -107,15 +135,15 @@ export const animeRouter = createTRPCRouter({
     .input(z.object({
       collectionType: z.string(),
       newCollectionType: z.string(),
-      animeId: z.string(),
-      userId: z.string()
+      id: z.string(),
+      userId: z.string(),
+      animeId: z.string()
     }))
     .mutation( async ({ ctx, input }) => {
       if (input.collectionType === 'toWatch'){
         await ctx.prisma.toWatch.delete({
           where: {
-            userId: input.userId,
-            animeId: input.animeId
+            id: input.id
           }
         });
       }
@@ -123,8 +151,7 @@ export const animeRouter = createTRPCRouter({
       else if (input.collectionType === 'watching'){
         await ctx.prisma.watching.delete({
           where: {
-            userId: input.userId,
-            animeId: input.animeId
+            id: input.id
           }
         });
       }
@@ -132,24 +159,24 @@ export const animeRouter = createTRPCRouter({
       else if (input.collectionType === 'watched'){
         await ctx.prisma.watched.delete({
           where: {
-            userId: input.userId,
-            animeId: input.animeId
+            id: input.id
           }
         });  
       }
       //Logic for creating the element in the new collection
       if (input.newCollectionType === 'toWatch'){
-        return await ctx.prisma.toWatch.delete({
-          where: {
+        return await ctx.prisma.toWatch.create({
+          data: {
             userId: input.userId,
             animeId: input.animeId
+            
           }
         });
       }
 
       else if (input.newCollectionType === 'watching'){
-        return await ctx.prisma.watching.delete({
-          where: {
+        return await ctx.prisma.watching.create({
+          data: {
             userId: input.userId,
             animeId: input.animeId
           }
@@ -157,8 +184,8 @@ export const animeRouter = createTRPCRouter({
       }
 
       else if (input.newCollectionType === 'watched'){
-        return await ctx.prisma.watched.delete({
-          where: {
+        return await ctx.prisma.watched.create({
+          data: {
             userId: input.userId,
             animeId: input.animeId
           }
@@ -170,33 +197,29 @@ export const animeRouter = createTRPCRouter({
   deleteFromList: protectedProcedure
     .input(z.object({
       collectionType: z.string(),
-      animeId: z.string(),
-      userId: z.string()
+      id: z.string()
     }))
     .mutation( async ({ ctx, input }) => {
       if (input.collectionType === 'toWatch'){
-        return await ctx.prisma.toWatch.create({
-          data: {
-            userId: input.userId,
-            animeId: input.animeId
+        return await ctx.prisma.toWatch.delete({
+          where: {
+            id: input.id
           }
         });
       }
 
       else if (input.collectionType === 'watching'){
-        return await ctx.prisma.watching.create({
-          data: {
-            userId: input.userId,
-            animeId: input.animeId
+        return await ctx.prisma.watching.delete({
+          where: {
+            id: input.id
           }
         });
       }
 
       else if (input.collectionType === 'watched'){
-        return await ctx.prisma.watched.create({
-          data: {
-            userId: input.userId,
-            animeId: input.animeId
+        return await ctx.prisma.watched.delete({
+          where: {
+            id: input.id
           }
         });      
       }

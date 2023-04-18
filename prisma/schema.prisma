@@ -83,24 +83,31 @@ model Anime {
 
 model ToWatch {
   id        String @id @default(cuid())
-  userId    String @unique
+  userId    String 
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  animeId   String @unique
+  animeId   String 
   anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+
+@@index([userId])
+@@index([animeId])
 }
 
 model Watching {
   id        String @id @default(cuid())
-  userId    String @unique
+  userId    String 
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  animeId   String @unique
+  animeId   String 
   anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+@@index([userId])
+@@index([animeId])
 }
 
 model Watched {
   id        String @id @default(cuid())
-  userId    String @unique
+  userId    String 
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  animeId   String @unique
+  animeId   String 
   anime     Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+@@index([userId])
+@@index([animeId])
 }
