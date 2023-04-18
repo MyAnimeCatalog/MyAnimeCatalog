@@ -122,13 +122,31 @@ export const animeRouter = createTRPCRouter({
       }
     }),
 
-  getWatching: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
-
-  getWatched: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  getList: protectedProcedure
+    .input(z.string())
+    .query(async ({ input, ctx }) => {
+      if (input === 'toWatch'){
+        return await ctx.prisma.toWatch.findMany({
+          where: {
+            userId: ctx.session.user.id,
+          }
+        });
+      }
+      else if (input === 'watching'){
+        return await ctx.prisma.watching.findMany({
+          where: {
+            userId: ctx.session.user.id,
+          }
+        });
+      }
+      else if (input === 'watched'){
+        return await ctx.prisma.watched.findMany({
+          where: {
+            userId: ctx.session.user.id,
+          }
+        });
+      }
+    }),
 
   updateCategory: protectedProcedure
     .input(z.object({
