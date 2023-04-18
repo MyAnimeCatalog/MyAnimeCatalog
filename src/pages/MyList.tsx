@@ -4,7 +4,7 @@ const MyList: NextPage = () => {
   
   return (
     <>
-      My List!
+      <h1>My List</h1>
     </>
   );
 };
