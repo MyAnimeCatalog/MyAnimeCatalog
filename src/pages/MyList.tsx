@@ -1,9 +1,14 @@
 import { type NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyListItem from "~/components/MyListItem";
+import { api } from "~/utils/api";
 
 const MyList: NextPage = () => {
   const [activeTab, setActiveTab] = useState("");
+  const toWatchData = api.animes.getList.useQuery(`toWatch`).data;
+  const watchingData = api.animes.getList.useQuery(`watching`).data;
+  const watchedData = api.animes.getList.useQuery(`watched`).data;
+  console.log(toWatchData);
 
   const clickedToWatchHandler = (): void => {
     setActiveTab("toWatch");
@@ -14,7 +19,6 @@ const MyList: NextPage = () => {
   const clickedWatchedHandler = (): void => {
     setActiveTab("watched");
   };
-  console.log(activeTab);
 
   return (
     <>
@@ -32,7 +36,7 @@ const MyList: NextPage = () => {
             To Watch
           </h3>
           <h3
-            className={`cursor-pointer hover:text-lightGrey active:underline ${
+            className={`cursor-pointer hover:text-lightGrey ${
               activeTab === `watching`
                 ? `border-b-2 border-solid border-sky-500`
                 : ``
@@ -42,7 +46,7 @@ const MyList: NextPage = () => {
             Watching
           </h3>
           <h3
-            className={`cursor-pointer hover:text-lightGrey active:underline ${
+            className={`cursor-pointer hover:text-lightGrey ${
               activeTab === `watched`
                 ? `border-b-2 border-solid border-sky-500`
                 : ``
@@ -52,7 +56,7 @@ const MyList: NextPage = () => {
             Watched
           </h3>
         </nav>
-        <section className="w-3/2 my-5 bg-sky-500 py-5">
+        <section className="my-5 w-2/3 bg-sky-500 py-5">
           <MyListItem />
           <MyListItem />
           <MyListItem />
