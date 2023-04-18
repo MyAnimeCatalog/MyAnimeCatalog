@@ -125,27 +125,47 @@ export const animeRouter = createTRPCRouter({
   getList: protectedProcedure
     .input(z.string())
     .query(async ({ input, ctx }) => {
+      let list: { animeId: string; }[];
       if (input === 'toWatch'){
-        return await ctx.prisma.toWatch.findMany({
+        list = await ctx.prisma.toWatch.findMany({
           where: {
             userId: ctx.session.user.id,
+          },
+          select: {
+            animeId: true,
           }
         });
       }
       else if (input === 'watching'){
-        return await ctx.prisma.watching.findMany({
+        list = await ctx.prisma.watching.findMany({
           where: {
             userId: ctx.session.user.id,
+          },
+          select: {
+            animeId: true,
           }
         });
       }
-      else if (input === 'watched'){
-        return await ctx.prisma.watched.findMany({
+      else{
+        list = await ctx.prisma.watched.findMany({
           where: {
             userId: ctx.session.user.id,
+          },
+          select: {
+            animeId: true
           }
         });
       }
+      const animeIds: string[] = [];
+      list.forEach((object) => {
+        animeIds.push(object.animeId);
+        //animeId -> anime table: id
+      });
+      return await ctx.prisma.anime.findMany({
+        where: {
+          id: { in: animeIds}
+        }
+      });
     }),
 
   updateCategory: protectedProcedure
