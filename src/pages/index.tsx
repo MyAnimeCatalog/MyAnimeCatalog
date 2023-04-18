@@ -38,19 +38,22 @@ interface topAnimes {
 
 const Home: NextPage = () => {
   const [ topSeasonAnimes, setTopSeasonAnimes ] = useState<anime[]>([]);
-  const { mutate } = api.animes.addAnimeToWatch.useMutation();
-  useEffect(() => {const Anime = mutate({
-    titleEn: 'Yo',
-    titleJP: 'Yo',
-    image: 'Yo',
-    malID: 'Yo',
-    synopsis: 'Yo',
-    rating: 'Yo',
-    genre: 'Yo',
-    score: 1,
-    scored_by: 1,
-    rank: 1,
-  })}, []);
+  const { mutate } = api.animes.addAnimeToCollection.useMutation();
+  useEffect(() => {
+    mutate({
+      titleEn: 'Yo',
+      titleJP: 'Yo',
+      image: 'Yo',
+      malID: 'Yo',
+      synopsis: 'Yo',
+      rating: 'Yo',
+      genre: 'Yo',
+      score: 1,
+      scored_by: 1,
+      rank: 1,
+      collectionType: 'toWatch'
+    });
+  }, []);
 
   useEffect((): void => {
     const getTopSeasonAnimes = async (): Promise<void> => {

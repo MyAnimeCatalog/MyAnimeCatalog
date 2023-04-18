@@ -34,7 +34,9 @@ import {
 // })
 
 export const animeRouter = createTRPCRouter({
-  addAnimeToWatch: publicProcedure
+  //Add anime to one of the three collections for a user
+  addAnimeToCollection: protectedProcedure
+  //Define shape of input object
     .input(z.object({
       titleEn: z.string(),
       titleJP: z.string(),
@@ -46,36 +48,80 @@ export const animeRouter = createTRPCRouter({
       score: z.number(),
       scored_by: z.number(),
       rank: z.number(),
+      collectionType: z.string() //collection type is used to decide which collection to add to
     }))
     .mutation(async ({input, ctx}) => {
-      const anime = await ctx.prisma.anime.create(
-        {data: {
-          titleEn: input.titleEn,
-          titleJP: input.titleJP,
-          image: input.image,
-          malID: input.malID,
-          synopsis: input.synopsis,
-          rating: input.rating,
-          genre: input.genre,
-          score: input.score,
-          scored_by: input.scored_by,
-          rank: input.rank,
-        }});
-      if (ctx.session){
-        const collection = await ctx.prisma.toWatch.create({
+      //Check if the input anime exists already
+      let anime = await ctx.prisma.anime.findUnique({
+        where: {
+          titleEn: input.titleEn
+        }
+      });
+      if (anime === null){
+        //if it does not exist, create a row in the table
+        anime = await ctx.prisma.anime.create(
+          {data: {
+            titleEn: input.titleEn,
+            titleJP: input.titleJP,
+            image: input.image,
+            malID: input.malID,
+            synopsis: input.synopsis,
+            rating: input.rating,
+            genre: input.genre,
+            score: input.score,
+            scored_by: input.scored_by,
+            rank: input.rank,
+          }});
+      }
+      else{
+        //if it does exist, update it (anime data can change over time)
+        anime = await ctx.prisma.anime.update(
+          {
+            where: {
+              id: anime.id
+            },
+            data: {
+              titleEn: input.titleEn,
+              titleJP: input.titleJP,
+              image: input.image,
+              malID: input.malID,
+              synopsis: input.synopsis,
+              rating: input.rating,
+              genre: input.genre,
+              score: input.score,
+              scored_by: input.scored_by,
+              rank: input.rank,
+            }
+          }
+        );
+      }
+      //Make sure user is logged in
+      console.log(anime);
+      if (input.collectionType === 'toWatch'){
+        return await ctx.prisma.toWatch.create({
           data: {
             userId: ctx.session.user.id,
             animeId: anime.id
           }
         });
-        return collection;
       }
-      else return anime;
+      else if (input.collectionType === 'watching'){
+        return await ctx.prisma.toWatch.create({
+          data: {
+            userId: ctx.session.user.id,
+            animeId: anime.id
+          }
+        });
+      }
+      else if (input.collectionType === 'watched'){
+        return await ctx.prisma.watched.create({
+          data: {
+            userId: ctx.session.user.id,
+            animeId: anime.id
+          }
+        });
+      }
     }),
-
-  getToWatch: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany();
-  }),
 
   getWatching: protectedProcedure.query(() => {
     return "you can now see this secret message!";
