@@ -8,9 +8,9 @@
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
-## Project in Development, Check Back Soon!
 
-## Tech
+
+## Tech Stack
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
@@ -18,3 +18,4 @@
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
+We built this application with typesafety in mind! Our tech stack ensures end-to-end typesafety from the client to the database, everything is typed and allows for IntelliSense (autocompletion) while writing out queries or mutations in the frontend. 
