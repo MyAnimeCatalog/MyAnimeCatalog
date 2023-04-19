@@ -92,7 +92,7 @@ const DailySchedule: NextPage = () => {
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">
           Anime Showing Today
         </h2>
-        <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
+        <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 w-1/2 md:overflow-auto">
           {animes.length > 0 ? (
             animes.map((anime) => <Anime key={anime.mal_id} anime={anime} />)
           ) : (

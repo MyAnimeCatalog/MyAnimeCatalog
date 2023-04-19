@@ -4,6 +4,7 @@ import MyListItem from "~/components/MyListItem";
 import { api } from "~/utils/api";
 import { type MyListAnimeDataTypes } from "~/types";
 import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 const pageVariants = {
   initial: {
@@ -27,11 +28,6 @@ const MyList: NextPage = () => {
   const toWatchData = api.animes.getList.useQuery(`toWatch`).data;
   const watchingData = api.animes.getList.useQuery(`watching`).data;
   const watchedData = api.animes.getList.useQuery(`watched`).data;
-
-
-  // const toWatchD = useRef([]);
-  // const watchingD = useRef([]);
-  // const watchedD = useRef([]);
 
   const [toWatchList, setToWatchList] = useState<MyListAnimeDataTypes[]>(
     toWatchData ? toWatchData : []
@@ -73,16 +69,6 @@ const MyList: NextPage = () => {
     else if (activeT === "watching") return setWatchingList(watchingList.filter((a) => a.id !== animeId));
     else if (activeT === "watched") return setWatchedList(watchedList.filter((a) => a.id !== animeId));
   };
-  
-
-  // useEffect(() => {
-  //   toWatchD.current = toWatchData;
-  //   watchingD.current = watchingData;
-  //   watchedD.current = watchedData;
-  //   // console.log(`REF toWatchD IS: `, toWatchD.current);
-  //   // console.log(`REF toWatchD IS: `, toWatchD.current);
-  //   // console.log(`REF toWatchD IS: `, toWatchD.current);
-  // }, [toWatchData, watchingData, watchedData]);
 
   useEffect(() => {
     // let newAnimeList: JSX.Element[] = [];
@@ -150,38 +136,52 @@ const MyList: NextPage = () => {
             Watched
           </h3>
         </nav>
-        <section className="my-5 w-2/3 rounded bg-slate-300 bg-opacity-20 py-5 px-5 sm: w-5/6 md: w-5/6">
-          {activeTab === "toWatch" &&
-            toWatchList?.map((anime) => (
-              <MyListItem
-                key={anime.malID + "3"}
-                anime={anime}
-                activeTab={activeTab}
-                changeListHandler={changeListHandler}
-                deleteAnime={deleteAnime}
-              />
-            ))}
-          {activeTab === "watching" &&
-            watchingList?.map((anime) => (
-              <MyListItem
-                key={anime.malID + "2"}
-                anime={anime}
-                activeTab={activeTab}
-                changeListHandler={changeListHandler}
-                deleteAnime={deleteAnime}
-              />
-            ))}
-          {activeTab === "watched" &&
-            watchedList?.map((anime) => (
-              <MyListItem
-                key={anime.malID + "1"}
-                anime={anime}
-                activeTab={activeTab}
-                changeListHandler={changeListHandler}
-                deleteAnime={deleteAnime}
-              />
-            ))}
-        </section>
+        <AnimatePresence mode = "wait" initial = {false}>
+          <motion.section 
+            initial={{ opacity: 0.7 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0.7 }}
+            transition={{
+              duration: 0.25,
+              ease: "easeIn",
+            }}
+            key={activeTab}
+            className="my-5 w-2/3 rounded bg-slate-300 bg-opacity-20 py-5 px-5">
+            {activeTab === "toWatch" &&
+              toWatchList?.map((anime) => (
+                <MyListItem
+                  key={anime.malID + "3"}
+                  anime={anime}
+                  activeTab={activeTab}
+                  changeListHandler={changeListHandler}
+                  deleteAnime={deleteAnime}
+                />
+              ))}
+            {(activeTab === "toWatch" && toWatchList.length === 0) && <h2 className = 'text-2xl text-center'>List is Empty</h2>}
+            {activeTab === "watching" &&
+              watchingList?.map((anime) => (
+                <MyListItem
+                  key={anime.malID + "2"}
+                  anime={anime}
+                  activeTab={activeTab}
+                  changeListHandler={changeListHandler}
+                  deleteAnime={deleteAnime}
+                />
+              ))}
+            {(activeTab === "watching" && watchingList.length === 0) && <h2 className = 'text-2xl text-center'>List is Empty</h2>}
+            {activeTab === "watched" &&
+              watchedList?.map((anime) => (
+                <MyListItem
+                  key={anime.malID + "1"}
+                  anime={anime}
+                  activeTab={activeTab}
+                  changeListHandler={changeListHandler}
+                  deleteAnime={deleteAnime}
+                />
+              ))}
+            {(activeTab === "watched" && watchedList.length === 0) && <h2 className = 'text-2xl text-center'>List is Empty</h2>}
+          </motion.section>
+        </AnimatePresence>
       </motion.main>
     </>
   );

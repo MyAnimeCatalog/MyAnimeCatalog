@@ -8,7 +8,7 @@ export const animeRouter = createTRPCRouter({
     .input(
       z.object({
         titleEn: z.string(),
-        titleJP: z.string(),
+        titleJP: z.string().nullable(),
         image: z.string(),
         malID: z.string(),
         synopsis: z.string(),
