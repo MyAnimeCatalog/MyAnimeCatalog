@@ -55,6 +55,13 @@ const WeeklySchedule: NextPage = () => {
             //   alt="Loading icon"
             //   style={{ display: "block", margin: "0 auto" }}
             // />
+
+            // animes.map(anime => (
+            //   <Anime key = {anime.mal_id} anime = {anime}/>
+            // ))
+
+            // <ClipLoader color="white" />
+
             <Image
               src="/naruto.gif"
               alt="Loader icon"
@@ -63,15 +70,13 @@ const WeeklySchedule: NextPage = () => {
             />
           ) : (
             // <ClipLoader color="white" />
-            // animes.map(anime => (
-            //   <Anime key = {anime.mal_id} anime = {anime}/>
-            // ))
-            // <ClipLoader color="white" />
+
             // <img
             //   src={naruto.toString()}
             //   alt="Loading icon"
             //   style={{ display: "block", margin: "0 auto" }}
             // />
+
             <Image
               src="/naruto.gif"
               alt="Loader icon"
