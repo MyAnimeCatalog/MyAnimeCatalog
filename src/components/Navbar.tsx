@@ -41,10 +41,11 @@ const AuthShowcase: React.FC = () => {
   const router = useRouter();
   
   useEffect(() => {
-    if (!sessionData) {
+    if (!sessionData && router.pathname !== '/' && router.pathname !== '/DailySchedule') {
       void router.push("/");
     }
   }, [sessionData, router]);
+
   return (
     <div className="flex items-center justify-center gap-4">
       {sessionData && (

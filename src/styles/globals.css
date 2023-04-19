@@ -6,7 +6,7 @@ html,
 body {
     /* overflow: hidden */
     position: relative;
-    background: rgba(0, 0, 0, 0.8)
+    background: linear-gradient(to bottom, #2e026d, #15162c);
 }
 
 ::-webkit-scrollbar{ 
