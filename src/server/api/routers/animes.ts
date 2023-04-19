@@ -214,34 +214,44 @@ export const animeRouter = createTRPCRouter({
       }
       //Logic for creating the element in the new collection
       if (input.newCollectionType === "toWatch") {
-        const test = await ctx.prisma.toWatch.create({
+        const updated = await ctx.prisma.toWatch.create({
           data: {
             userId: ctx.session.user.id,
             animeId: input.animeId,
           },
         });
-        console.log("TEST IS:", test);
-        return await ctx.prisma.toWatch.create({
-          data: {
-            userId: ctx.session.user.id,
-            animeId: input.animeId,
-          },
+        const updatedAnime = await ctx.prisma.anime.findUnique({
+          where: {
+            id: updated.animeId
+          }
         });
+        return updatedAnime;
       } else if (input.newCollectionType === "watching") {
-        return await ctx.prisma.watching.create({
+        const updated = await ctx.prisma.watching.create({
           data: {
             userId: ctx.session.user.id,
             animeId: input.animeId,
           },
         });
+        const updatedAnime = await ctx.prisma.anime.findUnique({
+          where: {
+            id: updated.animeId
+          }
+        });
+        return updatedAnime;
       } else if (input.newCollectionType === "watched") {
-        console.log("WE ARE INSIDE OF THE ADD TO WATCHED AREA!!!");
-        return await ctx.prisma.watched.create({
+        const updated = await ctx.prisma.watched.create({
           data: {
             userId: ctx.session.user.id,
             animeId: input.animeId,
           },
         });
+        const updatedAnime = await ctx.prisma.anime.findUnique({
+          where: {
+            id: updated.animeId
+          }
+        });
+        return updatedAnime;
       }
     }),
 

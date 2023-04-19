@@ -103,4 +103,8 @@ export interface MyListAnimeDataProps {
     activeT: string,
     targetT: string
   ) => void;
+  deleteAnime: (
+    animeId: string,
+    activeT: string
+  ) => void;
 }

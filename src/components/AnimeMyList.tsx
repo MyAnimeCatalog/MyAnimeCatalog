@@ -10,11 +10,11 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
   anime,
   activeTab,
   changeListHandler,
+  deleteAnime,
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [clickedCollectionType, setClickedCollectionType] = useState(``);
-  const deleteAnime = api.animes.deleteFromList.useMutation().mutate;
-  const updateCategory = api.animes.updateCategory.useMutation().mutate;
+  const deleteAnimeApi = api.animes.deleteFromList.useMutation().mutateAsync;
+  const updateCategory = api.animes.updateCategory.useMutation().mutateAsync;
 
   // useEffect(() => {
   //   changeListHandler(anime, activeTab, clickedCollectionType);
@@ -26,25 +26,31 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
   //   changeListHandler,
   // ]);
 
-  const handleClickUpdate = (
+  const handleClickUpdate = async (
     collectionType: string,
     newCollectionType: string
-  ): void => {
-    const newAnime = updateCategory({
+  ) => {
+    const newAnime = await updateCategory({
       collectionType: collectionType,
       newCollectionType: newCollectionType,
       animeId: anime.id,
     });
-    // changeListHandler(newAnime, collectionType, newCollectionType);
+    if (newAnime !== undefined && newAnime !== null){
+      changeListHandler(newAnime, collectionType, newCollectionType);
+    }
 
     // changeListHandler(newAnime.result.result.data, collectionType, newCollectionType);
   };
 
-  const handleClickDelete = (collectionType: string): void => {
-    deleteAnime({
+
+  const handleClickDelete = async (collectionType: string) => {
+    const animeObj = await deleteAnimeApi({
       animeId: anime.id,
       collectionType: collectionType,
     });
+    if (animeObj !== undefined && animeObj !== null){
+      deleteAnime(animeObj.animeId, collectionType);
+    }
   };
 
   const toggleModal = () => {
@@ -69,8 +75,7 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
               {activeTab !== "toWatch" && (
                 <li
                   onClick={() => {
-                    handleClickUpdate(activeTab, "toWatch");
-                    setClickedCollectionType(`toWatch`);
+                    void handleClickUpdate(activeTab, "toWatch");
                   }}
                   className="select-none py-1 hover:cursor-pointer hover:underline"
                 >
@@ -80,8 +85,7 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
               {activeTab !== "watching" && (
                 <li
                   onClick={() => {
-                    handleClickUpdate(activeTab, "watching");
-                    setClickedCollectionType(`toWatch`);
+                    void handleClickUpdate(activeTab, "watching");
                   }}
                   className="select-none py-1 hover:cursor-pointer hover:underline"
                 >
@@ -91,8 +95,7 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
               {activeTab !== "watched" && (
                 <li
                   onClick={() => {
-                    console.log(`FRONTEND CHECK ON ACTIVETAB: `, activeTab);
-                    handleClickUpdate(activeTab, "watched");
+                    void handleClickUpdate(activeTab, "watched");
                   }}
                   className="select-none py-1 hover:cursor-pointer hover:underline"
                 >
@@ -100,7 +103,7 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
                 </li>
               )}
               <li
-                onClick={() => handleClickDelete(activeTab)}
+                onClick={() => void handleClickDelete(activeTab)}
                 className="select-none py-1 hover:cursor-pointer hover:underline"
               >
                 Delete

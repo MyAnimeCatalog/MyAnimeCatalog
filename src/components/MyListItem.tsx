@@ -180,6 +180,7 @@ const MyListItem: React.FC<MyListAnimeDataProps> = ({
   anime,
   activeTab,
   changeListHandler,
+  deleteAnime
 }): JSX.Element => {
   return (
     <div className="m-5 flex items-start gap-5 p-4">
@@ -189,6 +190,7 @@ const MyListItem: React.FC<MyListAnimeDataProps> = ({
           anime={anime}
           activeTab={activeTab}
           changeListHandler={changeListHandler}
+          deleteAnime={deleteAnime}
         />
       </div>
       <div className="flex flex-col items-start">

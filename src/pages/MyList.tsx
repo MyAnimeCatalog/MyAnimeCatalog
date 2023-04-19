@@ -5,13 +5,13 @@ import { api } from "~/utils/api";
 import { type MyListAnimeDataTypes } from "~/types";
 
 const MyList: NextPage = () => {
-  let toWatchData = api.animes.getList.useQuery(`toWatch`).data;
-  let watchingData = api.animes.getList.useQuery(`watching`).data;
-  let watchedData = api.animes.getList.useQuery(`watched`).data;
+  const toWatchData = api.animes.getList.useQuery(`toWatch`).data;
+  const watchingData = api.animes.getList.useQuery(`watching`).data;
+  const watchedData = api.animes.getList.useQuery(`watched`).data;
 
-  const toWatchD = useRef([]);
-  const watchingD = useRef([]);
-  const watchedD = useRef([]);
+  // const toWatchD = useRef([]);
+  // const watchingD = useRef([]);
+  // const watchedD = useRef([]);
 
   const [toWatchList, setToWatchList] = useState<MyListAnimeDataTypes[]>(
     toWatchData ? toWatchData : []
@@ -24,7 +24,6 @@ const MyList: NextPage = () => {
   );
 
   const [activeTab, setActiveTab] = useState("toWatch");
-  const [renderedAnimeList, setRenderedAnimeList] = useState<JSX.Element[]>([]);
 
   const changeListHandler = (
     anime: MyListAnimeDataTypes,
@@ -33,52 +32,37 @@ const MyList: NextPage = () => {
   ): void => {
     if (activeT === "toWatch") {
       setToWatchList(toWatchList.filter((a) => a.id !== anime.id));
-      if (targetT === "watching")
-        return setWatchingList([anime, ...watchingList]);
-      else return setWatchedList([anime, ...watchingList]);
+      if (targetT === "watching") return setWatchingList([anime, ...watchingList]);
+      else return setWatchedList([anime, ...watchedList]);
     } else if (activeT === "watching") {
-      setToWatchList(toWatchList.filter((a) => a.id !== anime.id));
-      if (targetT === "toWatch")
-        return setToWatchList([anime, ...watchingList]);
-      else return setWatchedList([anime, ...watchingList]);
+      setWatchingList(watchingList.filter((a) => a.id !== anime.id));
+      if (targetT === "toWatch") return setToWatchList([anime, ...toWatchList]);
+      else return setWatchedList([anime, ...watchedList]);
     } else if (activeT === "watched") {
-      setToWatchList(toWatchList.filter((a) => a.id !== anime.id));
-      if (targetT === "toWatch")
-        return setToWatchList([anime, ...watchingList]);
+      setWatchedList(watchedList.filter((a) => a.id !== anime.id));
+      if (targetT === "toWatch") return setToWatchList([anime, ...toWatchList]);
       else return setWatchingList([anime, ...watchingList]);
     }
   };
-  // const changeListHandler = (
-  //   anime: MyListAnimeDataTypes,
-  //   activeT: string,
-  //   targetT: string
-  // ): void => {
-  //   if (activeT === "toWatch") {
-  //     toWatchData = toWatchData?.filter((a) => a.id !== anime.id);
-  //     if (targetT === "watching" && watchingData)
-  //       return (watchingData = [anime, ...watchingData]);
-  //     else return setWatchedList([anime, ...watchingList]);
-  //   } else if (activeT === "watching") {
-  //     toWatchData = toWatchData?.filter((a) => a.id !== anime.id);
-  //     if (targetT === "toWatch")
-  //       return (toWatchData = [anime, ...watchingList]);
-  //     else return (watchedData = [anime, ...watchingList]);
-  //   } else if (activeT === "watched") {
-  //     toWatchData = toWatchData?.filter((a) => a.id !== anime.id);
-  //     if (targetT === "toWatch")
-  //       return (toWatchData = [anime, ...watchingList]);
-  //     else return (watchingData = [anime, ...watchingList]);
-  //   }
-  // };
 
-  useEffect(() => {
-    toWatchD.current = toWatchData;
-    watchingD.current = watchingData;
-    watchedD.current = watchedData;
-    // console.log(`REF toWatchD IS: `, toWatchD.current);
-    // console.log(`REF toWatchD IS: `, toWatchD.current);
-    // console.log(`REF toWatchD IS: `, toWatchD.current);
-  }, [toWatchData, watchingData, watchedData]);
+  const deleteAnime = (
+    animeId: string,
+    activeT: string
+  ): void => {
+    if (activeT === "toWatch") return setToWatchList(toWatchList.filter((a) => a.id !== animeId));
+    else if (activeT === "watching") return setWatchingList(watchingList.filter((a) => a.id !== animeId));
+    else if (activeT === "watched") return setWatchedList(watchedList.filter((a) => a.id !== animeId));
+  };
+  
+
+  // useEffect(() => {
+  //   toWatchD.current = toWatchData;
+  //   watchingD.current = watchingData;
+  //   watchedD.current = watchedData;
+  //   // console.log(`REF toWatchD IS: `, toWatchD.current);
+  //   // console.log(`REF toWatchD IS: `, toWatchD.current);
+  //   // console.log(`REF toWatchD IS: `, toWatchD.current);
+  // }, [toWatchData, watchingData, watchedData]);
 
   useEffect(() => {
     // let newAnimeList: JSX.Element[] = [];
@@ -87,50 +71,12 @@ const MyList: NextPage = () => {
       setToWatchList(toWatchData);
       setWatchingList(watchingData);
       setWatchedList(watchedData);
-      //prettier ignore
-      // switch (activeTab) {
-      //   case `toWatch`:
-      //     newAnimeList = toWatchList?.map((anime) => (
-      //       <MyListItem
-      //         key={anime.malID}
-      //         anime={anime}
-      //         activeTab={activeTab}
-      //         changeListHandler={changeListHandler}
-      //       />
-      //     ));
-      //     break;
-      //   case `watching`:
-      //     newAnimeList = watchingList?.map((anime) => (
-      //       <MyListItem
-      //         key={anime.malID}
-      //         anime={anime}
-      //         activeTab={activeTab}
-      //         changeListHandler={changeListHandler}
-      //       />
-      //     ));
-      //     break;
-      //   case `watched`:
-      //     newAnimeList = watchedList?.map((anime) => (
-      //       <MyListItem
-      //         key={anime.malID}
-      //         anime={anime}
-      //         activeTab={activeTab}
-      //         changeListHandler={changeListHandler}
-      //       />
-      //     ));
-      //     break;
-      // }
-      // //setRenderedAnimeList needs to be updated with new list
-      // setRenderedAnimeList(newAnimeList);
+     
     }
   }, [
-    // activeTab,
     toWatchData,
     watchingData,
     watchedData,
-    // toWatchList,
-    // watchedList,
-    // watchingList,
   ]);
 
   const clickedToWatchHandler = (): void => {
@@ -187,6 +133,7 @@ const MyList: NextPage = () => {
                 anime={anime}
                 activeTab={activeTab}
                 changeListHandler={changeListHandler}
+                deleteAnime={deleteAnime}
               />
             ))}
           {activeTab === "watching" &&
@@ -196,6 +143,7 @@ const MyList: NextPage = () => {
                 anime={anime}
                 activeTab={activeTab}
                 changeListHandler={changeListHandler}
+                deleteAnime={deleteAnime}
               />
             ))}
           {activeTab === "watched" &&
@@ -205,9 +153,9 @@ const MyList: NextPage = () => {
                 anime={anime}
                 activeTab={activeTab}
                 changeListHandler={changeListHandler}
+                deleteAnime={deleteAnime}
               />
             ))}
-          {renderedAnimeList}
         </section>
       </main>
     </>
