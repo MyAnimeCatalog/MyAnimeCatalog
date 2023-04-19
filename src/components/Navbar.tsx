@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 const NavBar = () => {
   const { data: sessionData } = useSession();
   return (
-    <div className=".text-gray-900 fixed z-40 flex h-16 w-screen items-center justify-around bg-slate-400">
+    <div className=".text-gray-900 fixed z-40 flex h-16 w-screen items-center justify-around bg-slate-200">
       <Link
         href="/"
         className="font-semibold text-black no-underline transition hover:underline"

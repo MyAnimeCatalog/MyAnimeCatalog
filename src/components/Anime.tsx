@@ -6,6 +6,7 @@ import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
 import { type animeProps } from "../types";
 import { useSession } from "next-auth/react";
+import { motion } from "framer-motion";
 
 const Anime: React.FC<animeProps> = ({ anime }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -32,7 +33,16 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
     setShowModal(!showModal);
   };
   return (
-    <div className="group relative h-64 w-48 select-none">
+    <motion.div 
+    initial={{ opacity: 0 }}
+    animate={{
+      opacity: 1,
+      scale: [1, 1.2, 1.2, 1, 1],
+      // rotate: [0, 0, 270, 270, 0],
+      // borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+    }}
+    transition={{ duration: 1, delay: 1.2 }}
+    className="group relative h-64 w-48 select-none">
       <Image
         src={anime.images.jpg.image_url}
         alt="anime image"
@@ -89,7 +99,7 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
           )}
         </IconContext.Provider>
       } 
-    </div>
+    </motion.div>
   );
 };
 
