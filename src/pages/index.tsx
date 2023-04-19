@@ -258,7 +258,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Anime List</title>
         <meta name="description" content="Daniel's Anime List App" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/MAC.gif" />
       </Head>
       <motion.main 
         variants={pageVariants}
