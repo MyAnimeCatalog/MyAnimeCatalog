@@ -1,5 +1,7 @@
 # MyAnimeCatalog
 
+![1](https://user-images.githubusercontent.com/35904733/233177950-dcba8cb3-84a0-41e2-877c-99c051c7e4f2.png)
+
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
