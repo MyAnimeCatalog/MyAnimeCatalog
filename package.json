@@ -19,7 +19,6 @@
     "@trpc/next": "^10.18.0",
     "@trpc/react-query": "^10.18.0",
     "@trpc/server": "^10.18.0",
-    "file-loader": "^6.2.0",
     "framer-motion": "^10.12.2",
     "jikants": "^1.2.13",
     "next": "^13.2.4",
