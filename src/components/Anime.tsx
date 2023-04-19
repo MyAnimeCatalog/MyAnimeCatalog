@@ -4,9 +4,7 @@ import { useState } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
-import { type animeProps} from '../types';
-
-
+import { type animeProps } from "../types";
 
 const Anime: React.FC<animeProps> = ({ anime }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
