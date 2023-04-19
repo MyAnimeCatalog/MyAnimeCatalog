@@ -1,5 +1,7 @@
 import { type AnimeType } from "~/types";
-import Anime from "./Anime";
+import { Anime } from "@prisma/client";
+import AnimeComp from "./Anime";
+import { type animeProps } from "../types";
 
 const DUMMY_ANIME: AnimeType = {
   mal_id: 52034,
@@ -173,21 +175,16 @@ const DUMMY_ANIME: AnimeType = {
   ],
 };
 
-const MyListItem = () => {
+const MyListItem: React.FC<AnimeType> = ({ anime }: animeProps) => {
   return (
-    <div className="m-5 flex items-center gap-5 p-4">
+    <div className="m-5 flex items-start gap-5 p-4">
       <div>
-        <Anime anime={DUMMY_ANIME} />
+        <AnimeComp anime={DUMMY_ANIME} />
       </div>
       <div className="flex flex-col items-start">
-        <h2 className="pb-2 text-4xl">Anime Title</h2>
-        <p className="pb-2">Rating: 9.7</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          eligendi facere veritatis doloribus consequatur ab molestiae maxime
-          soluta, praesentium voluptatum. Consequuntur, veniam at beatae
-          corporis velit quas eveniet dignissimos minus.
-        </p>
+        <h2 className="pb-2 text-4xl">{anime.titleEn}</h2>
+        <p className="pb-2">Score: {anime.score}</p>
+        <p>{anime.synopsis}</p>
         <div></div>
       </div>
     </div>
