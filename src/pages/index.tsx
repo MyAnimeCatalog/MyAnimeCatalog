@@ -107,11 +107,11 @@ const Home: NextPage = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 overflow-hidden font-sans">
+        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 overflow-hidden font-sans no-scrollbar">
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">
           Top Seasonal Animes
         </h2>
-        <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 overflow-hidden">
+        <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 overflow-hidden ">
           {topSeasonAnimes.length > 0 ? (
             topSeasonAnimes.map((anime) => (
               <Anime key={anime.title} anime={anime} />
@@ -144,7 +144,7 @@ const Home: NextPage = () => {
               ref={inputRef}
             />
 
-            <div className="container flex flex-wrap items-center justify-center gap-12 rounded bg-slate-300 bg-opacity-20 px-40 py-6 md:overflow-auto">
+            <div className="container flex flex-wrap items-center justify-center gap-12 rounded bg-slate-300 bg-opacity-20 px-40 py-6 ">
               {searchAnimes.length > 0 && searchAnimes.map((anime) => <Anime key = {anime.mal_id} anime = {anime}/>)}
             </div>
           </form>

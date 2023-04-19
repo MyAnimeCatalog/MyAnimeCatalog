@@ -52,7 +52,7 @@ const AuthShowcase: React.FC = () => {
   const router = useRouter();
   
   useEffect(() => {
-    if (!sessionData && router.pathname !== '/' && router.pathname !== '/DailySchedule') {
+    if (!sessionData && router.pathname !== '/' && router.pathname !== '/DailySchedule' && !router.pathname.includes('/details')) {
       void router.push("/");
     }
   }, [sessionData, router]);

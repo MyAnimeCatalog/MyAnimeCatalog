@@ -13,7 +13,7 @@ const MyListItem: React.FC<MyListAnimeDataProps> = ({
 
   const changeLanguage = () => {
     setShowEnTitle(!showEnTitle);
-  }
+  };
 
   return (
     <div className="container flex flex-col items-start gap-5 p-4 lg:flex-row">
@@ -33,7 +33,7 @@ const MyListItem: React.FC<MyListAnimeDataProps> = ({
           <h2 onClick = {changeLanguage} className="pb-2 text-4xl hover:underline hover:cursor-pointer select:none">{anime.titleJP}</h2>
         } 
         <p className="pb-2 font-semibold">Score: {Number(anime.score).toFixed(2)}</p>
-        <p>{anime.synopsis}</p>
+        <p className="h-44 overflow-y-scroll no-scrollbar px-2 py-2">{anime.synopsis}</p>
         <div></div>
       </div>
     </div>
