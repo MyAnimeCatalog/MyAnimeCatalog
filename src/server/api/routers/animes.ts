@@ -172,7 +172,6 @@ export const animeRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      console.log("BACKEND input is", input);
       if (input.collectionType === "toWatch") {
         const animeToDelete = await ctx.prisma.toWatch.findFirst({
           where: {

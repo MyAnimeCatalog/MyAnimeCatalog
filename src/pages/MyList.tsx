@@ -9,6 +9,7 @@ const MyList: NextPage = () => {
   const watchingData = api.animes.getList.useQuery(`watching`).data;
   const watchedData = api.animes.getList.useQuery(`watched`).data;
 
+
   // const toWatchD = useRef([]);
   // const watchingD = useRef([]);
   // const watchedD = useRef([]);
