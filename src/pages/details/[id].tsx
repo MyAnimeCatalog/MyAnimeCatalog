@@ -3,12 +3,33 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { type AnimeFetchType, type FetchDataType } from "../../types";
 import { api } from "~/utils/api";
-import YouTube, { YouTubeProps, YouTubeEvent } from "react-youtube";
+import YouTube from "react-youtube";
+import { useSession } from "next-auth/react";
+import { motion } from "framer-motion";
+
+const pageVariants = {
+  initial: {
+    x: "-100vw",
+  },
+  animate: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const Details = () => {
   const [anime, setAnime] = useState<AnimeFetchType | null>(null);
   const [addToList, setAddToList] = useState(false);
   const [category, setCategory] = useState("");
+  const { data: sessionData } = useSession();
 
   const toWatch = api.animes.getList.useQuery("toWatch").data;
   const watching = api.animes.getList.useQuery("watching").data;
@@ -50,7 +71,13 @@ const Details = () => {
   }, [id]);
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <motion.main 
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white"
+    >
       {/* <p className="text-black">Anime: {id}</p> */}
       {anime && (
         <>
@@ -72,19 +99,24 @@ const Details = () => {
             <strong>Score:</strong> {anime.score} (Scored by{" "}
             <em>{anime.scored_by}</em> members){" "}
           </span>
-          <label htmlFor="Add-to-List">Add to List</label>
-          <select name="Add-to-List">
-            <option value="toWatch" selected>
-              To Watch
-            </option>
-            <option value="watching">Watching</option>
-            <option value="watched">Watched</option>
-          </select>
+
+          {sessionData && 
+          <>
+            <label htmlFor="Add-to-List">Add to List</label>
+            <select name="Add-to-List">
+              <option value="toWatch" selected>
+                To Watch
+              </option>
+              <option value="watching">Watching</option>
+              <option value="watched">Watched</option>
+            </select>
+          </>
+          }
           <p className="w-1/2 flex-wrap">{anime.synopsis}</p>
           <YouTube videoId={anime.trailer.youtube_id} />
         </>
       )}
-    </main>
+    </motion.main>
     // score, ranking, popularity, members
     //add to list
     //season and year?

@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
 import Anime from "~/components/Anime";
-import { ClipLoader } from "react-spinners";
+import { motion } from "framer-motion";
 import { type AnimeType, type topAnimes } from "../types";
 
 // const DUMMY_ANIME: anime = {
@@ -176,6 +176,23 @@ import { type AnimeType, type topAnimes } from "../types";
 //     },
 //   ],
 // };
+const pageVariants = {
+  initial: {
+    x: "-100vw",
+  },
+  animate: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const Home: NextPage = () => {
   const [topSeasonAnimes, setTopSeasonAnimes] = useState<AnimeType[]>([]);
@@ -243,7 +260,12 @@ const Home: NextPage = () => {
         <meta name="description" content="Daniel's Anime List App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16">
+      <motion.main 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16">
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">
           Top Seasonal Animes
         </h2>
@@ -290,7 +312,7 @@ const Home: NextPage = () => {
             <Anime key={4} anime={DUMMY_ANIME} /> */}
           </div>
         </section>
-      </main>
+      </motion.main>
     </>
   );
 };

@@ -1,6 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { api } from "~/utils/api";
 import * as Avatar from "@radix-ui/react-avatar";
 
 const NavBar = () => {

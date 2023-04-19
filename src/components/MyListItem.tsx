@@ -1,7 +1,4 @@
-import { type AnimeType, type MyListAnimeDataProps } from "~/types";
-import { Anime } from "@prisma/client";
-import AnimeComp from "./Anime";
-import { type animeProps } from "../types";
+import { type MyListAnimeDataProps } from "~/types";
 import AnimeMyList from "./AnimeMyList";
 
 // const DUMMY_ANIME: AnimeType = {
@@ -195,7 +192,7 @@ const MyListItem: React.FC<MyListAnimeDataProps> = ({
       </div>
       <div className="flex flex-col items-start">
         <h2 className="pb-2 text-4xl">{anime.titleEn}</h2>
-        <p className="pb-2 font-semibold">Score: {anime.score}</p>
+        <p className="pb-2 font-semibold">Score: {Number(anime.score).toFixed(2)}</p>
         <p>{anime.synopsis}</p>
         <div></div>
       </div>

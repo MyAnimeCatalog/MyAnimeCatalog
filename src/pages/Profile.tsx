@@ -4,10 +4,29 @@ import { api } from "~/utils/api";
 import * as Avatar from "@radix-ui/react-avatar";
 import { BsPencilFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import { motion } from "framer-motion";
 
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
+
+const pageVariants = {
+  initial: {
+    x: "-100vw",
+  },
+  animate: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const Profile: NextPage = () => {
   const user = api.users.getInfo.useQuery().data;
@@ -54,7 +73,13 @@ const Profile: NextPage = () => {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col flex-wrap items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
+      <motion.main 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex min-h-screen flex-col flex-wrap items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white"
+      >
         {user && (
           <>
             <h2 className="mb-2 text-4xl">{user.name}</h2>
@@ -155,7 +180,7 @@ const Profile: NextPage = () => {
             </div>
           </>
         )}
-      </main>
+      </motion.main>
     </>
   );
 };

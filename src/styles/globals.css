@@ -5,7 +5,8 @@
 html,
 body {
     /* overflow: hidden */
-    position: relative
+    position: relative;
+    background: rgba(0, 0, 0, 0.8)
 }
 
 ::-webkit-scrollbar{ 

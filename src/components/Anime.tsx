@@ -5,10 +5,13 @@ import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
 import { type animeProps } from "../types";
+import { useSession } from "next-auth/react";
 
 const Anime: React.FC<animeProps> = ({ anime }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { mutate } = api.animes.addAnimeToCollection.useMutation();
+  const { data: sessionData } = useSession();
+
   const handleClickAdd = (collectionType: string): void => {
     mutate({
       titleEn: anime.title,
@@ -71,19 +74,21 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
           </p>
         )}
       </Link>
-      <IconContext.Provider value={{ color: "white", size: "27px" }}>
-        {showModal ? (
-          <AiOutlineClose
-            onClick={toggleModal}
-            className="absolute right-2 top-2 z-30 shadow-lg hover:cursor-pointer"
-          />
-        ) : (
-          <AiOutlineDown
-            onClick={toggleModal}
-            className="absolute right-2 top-2 z-10 opacity-0 shadow-lg hover:cursor-pointer group-hover:opacity-100"
-          />
-        )}
-      </IconContext.Provider>
+      {sessionData &&
+        <IconContext.Provider value={{ color: "white", size: "27px" }}>
+          {showModal ? (
+            <AiOutlineClose
+              onClick={toggleModal}
+              className="absolute right-2 top-2 z-30 shadow-lg hover:cursor-pointer"
+            />
+          ) : (
+            <AiOutlineDown
+              onClick={toggleModal}
+              className="absolute right-2 top-2 z-10 opacity-0 shadow-lg hover:cursor-pointer group-hover:opacity-100"
+            />
+          )}
+        </IconContext.Provider>
+      } 
     </div>
   );
 };

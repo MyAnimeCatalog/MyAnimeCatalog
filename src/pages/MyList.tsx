@@ -3,6 +3,25 @@ import { useEffect, useRef, useState } from "react";
 import MyListItem from "~/components/MyListItem";
 import { api } from "~/utils/api";
 import { type MyListAnimeDataTypes } from "~/types";
+import { motion } from "framer-motion";
+
+const pageVariants = {
+  initial: {
+    x: "-100vw",
+  },
+  animate: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const MyList: NextPage = () => {
   const toWatchData = api.animes.getList.useQuery(`toWatch`).data;
@@ -92,7 +111,12 @@ const MyList: NextPage = () => {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
+      <motion.main 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
         <nav className="flex justify-start gap-x-10 pt-8 text-3xl ">
           <h3
             // className="cursor-pointer hover:text-lightGrey active:underline"
@@ -158,7 +182,7 @@ const MyList: NextPage = () => {
               />
             ))}
         </section>
-      </main>
+      </motion.main>
     </>
   );
 };
