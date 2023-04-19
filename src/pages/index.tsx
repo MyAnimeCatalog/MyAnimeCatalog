@@ -3,10 +3,7 @@ import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
 import Anime from "~/components/Anime";
 import { ClipLoader } from "react-spinners";
-import { type AnimeType, type topAnimes} from '../types';
-
-
-
+import { type AnimeType, type topAnimes } from "../types";
 
 // const DUMMY_ANIME: anime = {
 //   mal_id: 52034,
@@ -180,7 +177,6 @@ import { type AnimeType, type topAnimes} from '../types';
 //   ],
 // };
 
-
 const Home: NextPage = () => {
   const [topSeasonAnimes, setTopSeasonAnimes] = useState<AnimeType[]>([]);
   const [enteredSearch, setEnteredSearch] = useState(``);
@@ -204,6 +200,27 @@ const Home: NextPage = () => {
     };
     void getTopSeasonAnimes();
   }, []);
+
+  const loadingBar = (): string => {
+    // Idealy these assets SHOULD be stored on AWS (or alternative) to avoid link breaking and so on
+    const runningGifs = [
+      "https://media.tenor.com/j6V8KlvWkzkAAAAC/one-punch-man-running.gif", // One Punch man
+      "https://media3.giphy.com/media/JRlqKEzTDKci5JPcaL/giphy.gif", // Naruto
+      "https://media.tenor.com/BF9yBwexIbMAAAAC/anime-run.gif", // School girl running from guy
+      "https://i.pinimg.com/originals/d6/e6/ba/d6e6ba9290406e6c71bb379e865e7ae1.gif", // Boku No Academia
+      "https://media2.giphy.com/media/CRWdhM1XgJ7Pi/giphy.gif?cid=6c09b95265acae11df6d71bcf0a2b79b2e980bdc9a571020&rid=giphy.gif&ct=g", // Spirited Away
+      "https://media.tenor.com/V2FWyvBLJ0kAAAAM/anime-run-run.gif", // Haikyuu (Kageyama)
+      "https://media.tenor.com/K2Mx3I6QF-QAAAAC/anime-running.gif", // Haikyuu (Kageyama and Hinata)
+      "https://thumbs.gfycat.com/HelpfulDeliciousBadger-size_restricted.gif", // Little girl
+      "https://i.makeagif.com/media/9-14-2020/lKjzWR.gif", // Crying school girl
+      "https://64.media.tumblr.com/0a06108e630d56b5481d89951c91e99d/tumblr_otmaat1yFR1qzxv73o1_540.gif", // Dragon Ball
+      "https://pa1.narvii.com/6419/9d97ae9228f4016435e3465601a8f54cfcd80d1e_00.gif", // Naruto ugly face
+      "https://thumbs.gfycat.com/DisfiguredMajesticErin-max-1mb.gif", // Demon Slayer
+      "https://i.pinimg.com/originals/9a/ff/f8/9afff814180b17526752338badd8d188.gif", // Black Clover
+    ];
+
+    return runningGifs[Math.floor(Math.random() * runningGifs.length)] || "";
+  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -231,19 +248,21 @@ const Home: NextPage = () => {
           Top Seasonal Animes
         </h2>
         <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
-          {topSeasonAnimes.length > 0 ?
+          {topSeasonAnimes.length > 0 ? (
             topSeasonAnimes.map((anime) => (
               <Anime key={anime.title} anime={anime} />
             ))
-            :
-            <ClipLoader
-              color = 'white'
+          ) : (
+            <img
+              src={loadingBar()}
+              alt="Loading icon"
+              style={{ display: "block", margin: "0 auto" }}
             />
-          }
+          )}
         </div>
         <section
           id="search"
-          className="flex min-h-1/2 flex-col items-center justify-start pt-16"
+          className="min-h-1/2 flex flex-col items-center justify-start pt-16"
         >
           <form
             className="flex w-4/5 flex-col items-center justify-center"

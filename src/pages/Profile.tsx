@@ -5,6 +5,10 @@ import * as Avatar from "@radix-ui/react-avatar";
 import { BsPencilFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 const Profile: NextPage = () => {
   const user = api.users.getInfo.useQuery().data;
   const watched = api.animes.getList.useQuery("watched").data;
@@ -13,6 +17,7 @@ const Profile: NextPage = () => {
   const toWatchNum = toWatch ? toWatch.length : 0;
   const watching = api.animes.getList.useQuery("watching").data;
   const watchingNum = watching ? watching.length : 0;
+
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [pfpImage, setPfpImage] = useState<string>("");
   const [userImage, setUserImage] = useState<string>("");
@@ -49,10 +54,11 @@ const Profile: NextPage = () => {
 
   return (
     <>
-      <main className="flex min-h-screen flex-row items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
+      <main className="flex min-h-screen flex-col flex-wrap items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
         {user && (
           <>
-            <div className="mr-16">
+            <h2 className="mb-2 text-4xl">{user.name}</h2>
+            <div>
               <Avatar.Root className="AvatarRoot group relative">
                 <Avatar.Image
                   className="AvatarImage h-64 select-none rounded-full border-2 border-gray-700 border-transparent hover:border-current"
@@ -84,11 +90,11 @@ const Profile: NextPage = () => {
                   <button onClick={editPicture}>Submit</button>
                 </div>
               )}
-              <div className="relative h-64 w-64 bg-slate-700">
-                <h2 className="ml-2 mt-2 text-lg">About Me:</h2>
+              <div className="relative mb-6 mt-6 h-64 w-64 bg-slate-700 px-3 py-3 opacity-50 shadow-lg">
+                <h2 className="ml-2 mt-2 text-lg opacity-100">About Me:</h2>
                 {showBioModal && (
                   <textarea
-                    className="h-[190px] w-full resize-none bg-slate-600 px-3 py-3 focus:outline-none"
+                    className="h-[180px] w-full resize-none bg-slate-600 px-3 py-3 opacity-80 focus:outline-none"
                     onChange={(e) => setBio(e.target.value)}
                   >
                     {userBio}
@@ -98,13 +104,13 @@ const Profile: NextPage = () => {
                 {showBioModal ? (
                   <div>
                     <button
-                      className="absolute bottom-2 left-16 select-none"
+                      className="absolute bottom-1 left-16 select-none"
                       onClick={() => setShowBioModal(false)}
                     >
                       Cancel
                     </button>
                     <button
-                      className="absolute bottom-2 right-16 select-none"
+                      className="absolute bottom-1 right-16 select-none"
                       onClick={(e) => handleSubmit(e)}
                     >
                       Submit
@@ -123,14 +129,30 @@ const Profile: NextPage = () => {
                 )}
               </div>
             </div>
-            <ul className="text-4xl">
-              <li>Watched: {watchedNum}</li>
-              <li>To Watch: {toWatchNum}</li>
-              <li>Watching: {watchingNum}</li>
-              {/* Anime stats, Manga stats, Recently added
-                Favorite Animes
-            */}
-            </ul>
+            <div className="h-96 w-96">
+              <Doughnut
+                data={{
+                  labels: ["To Watch", "Watching", "Watched"],
+                  datasets: [
+                    {
+                      data: [toWatchNum, watchingNum, watchedNum],
+                      backgroundColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(54, 162, 235)",
+                        "rgb(255, 205, 86)",
+                      ],
+                      hoverOffset: 4,
+                    },
+                  ],
+                }}
+                options={
+                  {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                  } as object
+                }
+              />
+            </div>
           </>
         )}
       </main>

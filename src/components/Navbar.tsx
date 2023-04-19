@@ -14,10 +14,10 @@ const NavBar = () => {
         Home
       </Link>
       <Link
-        href="/WeeklySchedule"
+        href="/DailySchedule"
         className="font-semibold text-black no-underline transition hover:underline"
       >
-        {"Weekly Schedule"}
+        {"Showing Today"}
       </Link>
       {sessionData ? (
         <Link
