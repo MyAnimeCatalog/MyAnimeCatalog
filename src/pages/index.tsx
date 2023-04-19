@@ -196,6 +196,7 @@ const pageVariants = {
 
 const Home: NextPage = () => {
   const [topSeasonAnimes, setTopSeasonAnimes] = useState<AnimeType[]>([]);
+  const [ searchAnimes, setSearchAnimes ] = useState<AnimeType[]>([]);
   const [enteredSearch, setEnteredSearch] = useState(``);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -239,12 +240,21 @@ const Home: NextPage = () => {
     return runningGifs[Math.floor(Math.random() * runningGifs.length)] || "";
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //handle the search submission
-    //send the current state of the search input as your search request
-    //No submit button. User can press enter to submit search input
-    console.log(`submited`);
+    let str = enteredSearch;
+    str = str.replace(/\s+/g, "%20");
+    const url =  "https://api.jikan.moe/v4/anime?q=" + str + '&limit=8&order_by=scored_by&sort=desc';
+    try {
+      const res = await fetch(url);
+      const data = (await res.json()) as topAnimes;
+      setSearchAnimes(data.data);
+      if (!res.ok) {
+        setSearchAnimes([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     setEnteredSearch(``);
     inputRef && inputRef.current && inputRef.current.blur();
   };
@@ -284,7 +294,7 @@ const Home: NextPage = () => {
         </div>
         <section
           id="search"
-          className="min-h-1/2 flex flex-col items-center justify-start pt-16"
+          className="min-h-1/2 w-full flex flex-col items-center justify-start pt-16"
         >
           <form
             className="flex w-4/5 flex-col items-center justify-center"
@@ -301,16 +311,10 @@ const Home: NextPage = () => {
               ref={inputRef}
             />
 
-            <div className="container flex flex-wrap items-center justify-center gap-12 bg-white px-40 py-6 md:overflow-auto">
-              RED RED RED
+            <div className="container flex flex-wrap items-center justify-center gap-12 bg-slate-300 bg-opacity-20 px-40 py-6 md:overflow-auto">
+              {searchAnimes.length > 0 && searchAnimes.map((anime) => <Anime key = {anime.mal_id} anime = {anime}/>)}
             </div>
           </form>
-          <div className="container flex flex-wrap items-center justify-center gap-12 px-20 py-6 md:overflow-auto">
-            {/* <Anime key={1} anime={DUMMY_ANIME} />
-            <Anime key={2} anime={DUMMY_ANIME} />
-            <Anime key={3} anime={DUMMY_ANIME} />
-            <Anime key={4} anime={DUMMY_ANIME} /> */}
-          </div>
         </section>
       </motion.main>
     </>

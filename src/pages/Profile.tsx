@@ -115,11 +115,11 @@ const Profile: NextPage = () => {
                   <button onClick={editPicture}>Submit</button>
                 </div>
               )}
-              <div className="relative mb-6 mt-6 h-64 w-64 bg-slate-700 px-3 py-3 opacity-50 shadow-lg">
+              <div className="relative mb-6 mt-6 h-64 w-64 bg-slate-700 px-3 py-3 bg-opacity-50 shadow-lg">
                 <h2 className="ml-2 mt-2 text-lg opacity-100">About Me:</h2>
                 {showBioModal && (
                   <textarea
-                    className="h-[180px] w-full resize-none bg-slate-600 px-3 py-3 opacity-80 focus:outline-none"
+                    className="h-[180px] w-full resize-none bg-slate-600 px-3 py-3 bg-opacity-30 focus:outline-none"
                     onChange={(e) => setBio(e.target.value)}
                   >
                     {userBio}
