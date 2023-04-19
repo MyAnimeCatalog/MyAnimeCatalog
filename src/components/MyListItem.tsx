@@ -16,7 +16,7 @@ const MyListItem: React.FC<MyListAnimeDataProps> = ({
   }
 
   return (
-    <div className="m-5 flex items-start gap-5 p-4">
+    <div className="container flex flex-col items-start gap-5 p-4 lg:flex-row">
       <div>
         {/* <AnimeComp anime={DUMMY_ANIME} /> */}
         <AnimeMyList

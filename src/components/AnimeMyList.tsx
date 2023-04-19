@@ -67,6 +67,7 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
           fill={true}
           sizes="(max-width: 640px) 100vw, 640px"
           priority={true}
+          className="rounded"
         />
         {/* </Link> */}
         {showModal && (

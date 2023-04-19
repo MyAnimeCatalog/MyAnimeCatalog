@@ -75,9 +75,10 @@ const DailySchedule: NextPage = () => {
       "https://thumbs.gfycat.com/DisfiguredMajesticErin-max-1mb.gif", // Demon Slayer
       "https://i.pinimg.com/originals/9a/ff/f8/9afff814180b17526752338badd8d188.gif", // Black Clover
     ];
-
+    console.log('hello');
     return runningGifs[Math.floor(Math.random() * runningGifs.length)] || "";
   };
+
 
   return (
     <>
@@ -91,7 +92,7 @@ const DailySchedule: NextPage = () => {
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">
           Anime Showing Today
         </h2>
-        <div className="container flex w-[1000px] flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
+        <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
           {animes.length > 0 ? (
             animes.map((anime) => <Anime key={anime.mal_id} anime={anime} />)
           ) : (

@@ -3,33 +3,44 @@ import Link from "next/link";
 import * as Avatar from "@radix-ui/react-avatar";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { HamburgerMenu } from "./HashMenu/HamburgerMenu";
+import { AiFillGithub } from "react-icons/ai";
+import { IconContext } from "react-icons";
 
 
 const NavBar = () => {
   const { data: sessionData } = useSession();
   return (
-    <div className=".text-gray-900 fixed z-40 flex h-16 w-screen items-center justify-around bg-slate-200">
-      <Link
-        href="/"
-        className="font-semibold text-black no-underline transition hover:underline"
-      >
-        Home
-      </Link>
-      <Link
-        href="/DailySchedule"
-        className="font-semibold text-black no-underline transition hover:underline"
-      >
-        {"Showing Today"}
-      </Link>
-      {sessionData ? (
+    <div className="text-gray-900 fixed z-40 flex h-16 w-screen items-center justify-around bg-slate-200">
+      <div className = "flex items-center justify-around w-2/3 xl:w-3/5">
         <Link
-          href="/MyList"
-          className="font-semibold text-black no-underline transition hover:underline"
+          href="/"
+          className="font-semibold text-black no-underline transition hover:underline hidden lg:block"
         >
-          My List
+          Home
         </Link>
-      ) : null}
-      <AuthShowcase />
+        <Link
+          href="/DailySchedule"
+          className="font-semibold text-black no-underline transition hover:underline hidden lg:block"
+        >
+          {"Showing Today"}
+        </Link>
+        {sessionData ? (
+          <Link
+            href="/MyList"
+            className="font-semibold text-black no-underline transition hover:underline hidden lg:block"
+          >
+            My List
+          </Link>
+        ) : null}
+        <AuthShowcase />
+        <HamburgerMenu/>
+        <Link href = "https://github.com/MyAnimeCatalog/MyAnimeCatalog" target="_blank" rel="noopener noreferrer">
+          <IconContext.Provider value = {{size: '35px'}}>
+            <AiFillGithub className = 'fixed right-10 top-4'/>
+          </IconContext.Provider>
+        </Link>
+      </div>
     </div>
   );
 };
@@ -47,13 +58,11 @@ const AuthShowcase: React.FC = () => {
   }, [sessionData, router]);
 
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-center gap-4 z-50">
       {sessionData && (
         <span>
           Welcome,{" "}
-          <Link className="hover:text-lightGrey" href="/Profile">
-            {sessionData.user?.name?.split(` `)[0]}!
-          </Link>
+          {sessionData.user?.name?.split(` `)[0]}!
         </span>
       )}
 

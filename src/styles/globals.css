@@ -5,6 +5,7 @@
 html,
 body {
     /* overflow: hidden */
+    overflow-x: hidden;
     position: relative;
     background: linear-gradient(to bottom, #2e026d, #15162c);
 }

@@ -67,7 +67,7 @@ model VerificationToken {
 model Anime {
   id        String @id @default(cuid())
   titleEn   String @unique
-  titleJP   String
+  titleJP   String 
   image     String
   malID     String
   synopsis  String @db.Text

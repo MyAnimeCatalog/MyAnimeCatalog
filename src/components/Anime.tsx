@@ -37,9 +37,7 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
     initial={{ opacity: 0 }}
     animate={{
       opacity: 1,
-      scale: [1, 1.2, 1.2, 1, 1],
-      // rotate: [0, 0, 270, 270, 0],
-      // borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+      scale: [1, 1.1, 1.1, 1, 1],
     }}
     transition={{ duration: 1, delay: 1.2 }}
     className="group relative h-64 w-48 select-none">
@@ -49,6 +47,7 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
         fill={true}
         sizes="(max-width: 640px) 100vw, 640px"
         priority={true}
+        className="rounded"
       />
       {showModal && (
         <div className="absolute z-20 h-1/2 w-full bg-black opacity-80">

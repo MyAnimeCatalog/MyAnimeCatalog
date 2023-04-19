@@ -34,7 +34,7 @@ const Home: NextPage = () => {
     const getTopSeasonAnimes = async (): Promise<void> => {
       try {
         const res = await fetch(
-          "https://api.jikan.moe/v4/top/anime?type=tv&filter=airing&page=1&limit=18"
+          "https://api.jikan.moe/v4/top/anime?type=tv&filter=airing&page=1&limit=21"
         );
         const data = (await res.json()) as topAnimes;
         setTopSeasonAnimes(data.data);
@@ -100,14 +100,14 @@ const Home: NextPage = () => {
       <Head>
         <title>Anime List</title>
         <meta name="description" content="Daniel's Anime List App" />
-        <link rel="icon" href="/MAC.gif" />
+        <link rel="icon" href="/MAC.png" />
       </Head>
       <motion.main 
         variants={pageVariants}
         initial="initial"
         animate="animate"
         exit="exit"
-        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 overflow-hidden">
+        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 overflow-hidden font-sans">
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">
           Top Seasonal Animes
         </h2>
@@ -124,6 +124,7 @@ const Home: NextPage = () => {
             />
           )}
         </div>
+        {topSeasonAnimes.length > 0 &&
         <section
           id="search"
           className="min-h-1/2 w-full flex flex-col items-center justify-start pt-16"
@@ -137,17 +138,18 @@ const Home: NextPage = () => {
               className="mb-10 flex items-center justify-center rounded px-3 py-0.5"
               type="text"
               id="search-input"
-              placeholder="Search"
+              placeholder="Search by JP Name"
               onChange={handleInputChange}
               value={enteredSearch}
               ref={inputRef}
             />
 
-            <div className="container flex flex-wrap items-center justify-center gap-12 bg-slate-300 bg-opacity-20 px-40 py-6 md:overflow-auto">
+            <div className="container flex flex-wrap items-center justify-center gap-12 rounded bg-slate-300 bg-opacity-20 px-40 py-6 md:overflow-auto">
               {searchAnimes.length > 0 && searchAnimes.map((anime) => <Anime key = {anime.mal_id} anime = {anime}/>)}
             </div>
           </form>
         </section>
+        }
       </motion.main>
     </>
   );
