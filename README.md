@@ -19,6 +19,21 @@
 
 ## What is My Anime Catalog?
 
+## Getting Started
+
+If you want to try out My Anime Catalog, check it out <a href = "https://my-anime-catalog.vercel.app/">here</a>!
+
+If you are interested in contributing to My Anime Catalog, fork and clone this repo.  Navigate to the root directory and install the dependencies 
+e.g:
+```
+npm install
+```
+then 
+```
+npm run dev
+```
+Make sure you make your own .env file and fill it with the variables found in the .env.example file in the root directory!
+
 ## Tech Stack
 
 - [Next.js](https://nextjs.org)
@@ -28,6 +43,9 @@
 - [tRPC](https://trpc.io)
 
 We built this application with typesafety in mind! From the client to the database, everything is typed and we chose our tech stack to accomplish this! As devs, the experience using these tools is also amazing.  When using APIs on the frontend, IntelliSense helps us autocomplete fields for efficient workflow and type errors are quickly caught before compile time. Check the links above if you are interested in learning more about any of the tools we used!
+
+</br>
+For styling, we chose Tailwind CSS because of the fast workflow, especially when building mobile-friendly applications.  Built in screen breakpoints make it easy to define different styles for varying screen sizes.  If you value speed, consistency, and flexibility in their CSS workflow without the need to write CSS in a separate file or defining classess/IDs for the purpose of styling it's definitely worth checking out Tailwind CSS!
 
 ## Features
 
