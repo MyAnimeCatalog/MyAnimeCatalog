@@ -37,6 +37,30 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
             sizes="(max-width: 640px) 100vw, 640px"
             priority = {true}
           />
+          {showModal && (
+            <div className="absolute z-20 h-1/2 w-full bg-black opacity-80">
+              <ul className="px-4 py-3 text-white">
+                <li
+                  onClick={() => handleClickAdd("toWatch")}
+                  className="select-none py-1 hover:cursor-pointer hover:underline"
+                >
+                  Add To Watch
+                </li>
+                <li
+                  onClick={() => handleClickAdd("watching")}
+                  className="select-none py-1 hover:cursor-pointer hover:underline"
+                >
+                  Add Watching
+                </li>
+                <li
+                  onClick={() => handleClickAdd("watched")}
+                  className="select-none py-1 hover:cursor-pointer hover:underline"
+                >
+                  Add Watched
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
         <div className="flex-column absolute inset-0 h-full w-full items-start justify-start bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
           {!showModal && (
@@ -59,30 +83,6 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
           />
         )}
       </IconContext.Provider>
-      {showModal && (
-        <div className="absolute z-20 h-1/2 w-full bg-black opacity-80">
-          <ul className="px-4 py-3 text-white">
-            <li
-              onClick={() => handleClickAdd("toWatch")}
-              className="select-none py-1 hover:cursor-pointer hover:underline"
-            >
-              Add To Watch
-            </li>
-            <li
-              onClick={() => handleClickAdd("watching")}
-              className="select-none py-1 hover:cursor-pointer hover:underline"
-            >
-              Add Watching
-            </li>
-            <li
-              onClick={() => handleClickAdd("watched")}
-              className="select-none py-1 hover:cursor-pointer hover:underline"
-            >
-              Add Watched
-            </li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
