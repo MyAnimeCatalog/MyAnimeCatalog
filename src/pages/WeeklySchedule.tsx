@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { type AnimeType, type topAnimes } from "~/types";
 import { ClipLoader } from "react-spinners";
 import Anime from "~/components/Anime";
-// import naruto from "../../public/naruto.gif";
-// import Image from 'next/image';
+import naruto from "../../public/naruto.gif";
+import Image from "next/image";
 
 const WeeklySchedule: NextPage = () => {
   const [animes, setAnimes] = useState<AnimeType[]>([]);
@@ -56,6 +56,7 @@ const WeeklySchedule: NextPage = () => {
             //   style={{ display: "block", margin: "0 auto" }}
             // />
 
+
             animes.map((anime) => <Anime key={anime.mal_id} anime={anime} />)
           ) : (
             // <ClipLoader color="white" />
@@ -73,6 +74,7 @@ const WeeklySchedule: NextPage = () => {
             //   alt="Loading icon"
             //   style={{ display: "block", margin: "0 auto" }}
             // />
+
 
             // <Image
             //   src="/naruto.gif"
