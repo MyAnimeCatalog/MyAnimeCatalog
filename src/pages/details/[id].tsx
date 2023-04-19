@@ -100,7 +100,7 @@ const Details = () => {
       malID: anime!.mal_id.toString(),
       synopsis: anime!.synopsis,
       rating: anime!.rating,
-      genre: anime!.genres[0]!.name,
+      genre: (anime!.genres!.length > 0 && anime!.genres) ? anime!.genres[0]!.name : null,
       score: anime!.score,
       scored_by: anime!.scored_by,
       rank: anime!.rank,

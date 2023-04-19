@@ -14,6 +14,7 @@ export default {
       sm: {'max': '480px'},
       md: '768px',
       lg: '976px',
+      navBig: '1300px',
       big: '1800px',
       laptop: {'max': '1535px'},
     },

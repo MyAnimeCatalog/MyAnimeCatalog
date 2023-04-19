@@ -11,11 +11,11 @@ export const animeRouter = createTRPCRouter({
         titleJP: z.string().nullable(),
         image: z.string(),
         malID: z.string(),
-        synopsis: z.string(),
+        synopsis: z.string().nullable(),
         rating: z.string(),
-        genre: z.string(),
-        score: z.number(),
-        scored_by: z.number(),
+        genre: z.string().nullable(),
+        score: z.number().nullable(),
+        scored_by: z.number().nullable(),
         rank: z.number(),
         collectionType: z.string(), //collection type is used to decide which collection to add to
       })
