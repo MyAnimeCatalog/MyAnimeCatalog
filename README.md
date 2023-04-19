@@ -27,8 +27,40 @@
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-We built this application with typesafety in mind! Our tech stack ensures end-to-end typesafety from the client to the database, everything is typed and allows for IntelliSense (autocompletion) while writing out queries or mutations in the frontend. 
+We built this application with typesafety in mind! From the client to the database, everything is typed and we chose our tech stack to accomplish this! As devs, the experience using these tools is also amazing.  When using APIs on the frontend, IntelliSense helps us autocomplete fields for efficient workflow and type errors are quickly caught before compile time. Check the links above if you are interested in learning more about any of the tools we used!
 
 ## Features
 
+### Home Page
+
+🟣 
+
+🟣
+
+### Daily Schedule
+
+🟣
+
+🟣
+
+### Authentication
+
+🟣
+
+🟣
+
+### My List
+
+🟣
+
+🟣
+
+### Profile
+
+🟣
+
+🟣
+
 ## Contributing
+
+If you are interested in contributing, feel free to submit an issue or a pull request! My Anime Catalog is open source and we would be thrilled to welcome contributions from other developers excited about the project!
