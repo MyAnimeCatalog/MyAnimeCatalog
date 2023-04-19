@@ -5,7 +5,9 @@
 html,
 body {
     /* overflow: hidden */
-    position: relative
+    overflow-x: hidden;
+    position: relative;
+    background: linear-gradient(to bottom, #2e026d, #15162c);
 }
 
 ::-webkit-scrollbar{ 

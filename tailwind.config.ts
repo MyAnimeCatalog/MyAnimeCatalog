@@ -11,10 +11,11 @@ export default {
       },
     },
     screens: {
-      sm: '480px',
+      sm: {'max': '480px'},
       md: '768px',
       lg: '976px',
-      xl: '1440px'
+      big: '1800px',
+      laptop: {'max': '1535px'},
     },
   },
   plugins: [],

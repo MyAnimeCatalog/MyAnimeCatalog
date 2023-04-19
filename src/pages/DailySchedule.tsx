@@ -1,11 +1,26 @@
 import { type NextPage } from "next";
 import { useState, useEffect } from "react";
 import { type AnimeType, type topAnimes } from "~/types";
-import { ClipLoader } from "react-spinners";
 import Anime from "~/components/Anime";
-import naruto from "../../public/naruto.gif";
-import onePunch from "../../public/one-punch-min.gif";
-import Image from "next/image";
+import { motion } from "framer-motion";
+
+const pageVariants = {
+  initial: {
+    x: "-100vw",
+  },
+  animate: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const DailySchedule: NextPage = () => {
   const [animes, setAnimes] = useState<AnimeType[]>([]);
@@ -60,17 +75,24 @@ const DailySchedule: NextPage = () => {
       "https://thumbs.gfycat.com/DisfiguredMajesticErin-max-1mb.gif", // Demon Slayer
       "https://i.pinimg.com/originals/9a/ff/f8/9afff814180b17526752338badd8d188.gif", // Black Clover
     ];
-
+    console.log('hello');
     return runningGifs[Math.floor(Math.random() * runningGifs.length)] || "";
   };
 
+
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16">
+      <motion.main 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16"
+      >
         <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white">
           Anime Showing Today
         </h2>
-        <div className="container flex w-[1000px] flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
+        <div className="container flex flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
           {animes.length > 0 ? (
             animes.map((anime) => <Anime key={anime.mal_id} anime={anime} />)
           ) : (
@@ -81,7 +103,7 @@ const DailySchedule: NextPage = () => {
             />
           )}
         </div>
-      </main>
+      </motion.main>
     </>
   );
 };

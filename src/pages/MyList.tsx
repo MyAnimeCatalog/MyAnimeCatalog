@@ -3,6 +3,25 @@ import { useEffect, useRef, useState } from "react";
 import MyListItem from "~/components/MyListItem";
 import { api } from "~/utils/api";
 import { type MyListAnimeDataTypes } from "~/types";
+import { motion } from "framer-motion";
+
+const pageVariants = {
+  initial: {
+    x: "-100vw",
+  },
+  animate: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const MyList: NextPage = () => {
   const toWatchData = api.animes.getList.useQuery(`toWatch`).data;
@@ -92,41 +111,46 @@ const MyList: NextPage = () => {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
-        <nav className="flex justify-start gap-x-10 pt-8 text-3xl ">
+      <motion.main 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-10 pt-16 text-white">
+        <nav className="flex flex-col justify-start gap-x-10 pt-8 text-3xl md:flex-row">
           <h3
             // className="cursor-pointer hover:text-lightGrey active:underline"
-            className={`cursor-pointer hover:text-lightGrey ${
+            className={`cursor-pointer font-extrabold hover:text-lightGrey ${
               activeTab === `toWatch`
-                ? `border-b-2 border-solid border-sky-500`
+                ? `border-b-2 border-solid border-slate-300 border-opacity-60`
                 : ``
-            }`}
+            } sm: text-2xl`}
             onClick={clickedToWatchHandler}
           >
             To Watch
           </h3>
           <h3
-            className={`cursor-pointer hover:text-lightGrey ${
+            className={`cursor-pointer font-extrabold hover:text-lightGrey ${
               activeTab === `watching`
-                ? `border-b-2 border-solid border-sky-500`
+                ? `border-b-2 border-solid border-slate-300 border-opacity-60`
                 : ``
-            }`}
+            } sm: text-2xl`}
             onClick={clickedWatchingHandler}
           >
             Watching
           </h3>
           <h3
-            className={`cursor-pointer hover:text-lightGrey ${
+            className={`cursor-pointer font-extrabold hover:text-lightGrey ${
               activeTab === `watched`
-                ? `border-b-2 border-solid border-sky-500`
+                ? `border-b-2 border-solid border-slate-300 border-opacity-60`
                 : ``
-            }`}
+            } sm: text-2xl`}
             onClick={clickedWatchedHandler}
           >
             Watched
           </h3>
         </nav>
-        <section className="my-5 w-2/3 bg-sky-500 py-5">
+        <section className="my-5 w-2/3 rounded bg-slate-300 bg-opacity-20 py-5 px-5 sm: w-5/6 md: w-5/6">
           {activeTab === "toWatch" &&
             toWatchList?.map((anime) => (
               <MyListItem
@@ -158,7 +182,7 @@ const MyList: NextPage = () => {
               />
             ))}
         </section>
-      </main>
+      </motion.main>
     </>
   );
 };

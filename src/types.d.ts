@@ -84,7 +84,7 @@ interface DataType {
 export type MyListAnimeDataTypes = {
   id: string;
   titleEn: string;
-  titleJP: string;
+  titleJP: string | null;
   image: string;
   malID: string;
   synopsis: string;
@@ -107,4 +107,30 @@ export interface MyListAnimeDataProps {
     animeId: string,
     activeT: string
   ) => void;
+}
+
+export interface MenuToggleProps{
+  toggle: () => void
+}
+
+export type pathTrace = {
+  d: string
+}
+
+export type Opacity = {
+  opacity: number
+}
+
+export interface PathProps{
+  variants?:  {
+      closed: pathTrace | Opacity
+      open: pathTrace | Oacity
+  }
+  d?: string
+  transition?: {duration: number}
+}
+
+export interface MenuItemProps{
+  toggle: () => void
+  isOpen: boolean
 }

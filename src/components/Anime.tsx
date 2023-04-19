@@ -5,10 +5,14 @@ import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
 import { type animeProps } from "../types";
+import { useSession } from "next-auth/react";
+import { motion } from "framer-motion";
 
 const Anime: React.FC<animeProps> = ({ anime }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { mutate } = api.animes.addAnimeToCollection.useMutation();
+  const { data: sessionData } = useSession();
+
   const handleClickAdd = (collectionType: string): void => {
     mutate({
       titleEn: anime.title,
@@ -29,13 +33,21 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
     setShowModal(!showModal);
   };
   return (
-    <div className="group relative h-64 w-48 select-none">
+    <motion.div 
+    initial={{ opacity: 0 }}
+    animate={{
+      opacity: 1,
+      scale: [1, 1.1, 1.1, 1, 1],
+    }}
+    transition={{ duration: 1, delay: 1.2 }}
+    className="group relative h-64 w-48 select-none">
       <Image
         src={anime.images.jpg.image_url}
         alt="anime image"
         fill={true}
         sizes="(max-width: 640px) 100vw, 640px"
         priority={true}
+        className="rounded"
       />
       {showModal && (
         <div className="absolute z-20 h-1/2 w-full bg-black opacity-80">
@@ -71,20 +83,22 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
           </p>
         )}
       </Link>
-      <IconContext.Provider value={{ color: "white", size: "27px" }}>
-        {showModal ? (
-          <AiOutlineClose
-            onClick={toggleModal}
-            className="absolute right-2 top-2 z-30 shadow-lg hover:cursor-pointer"
-          />
-        ) : (
-          <AiOutlineDown
-            onClick={toggleModal}
-            className="absolute right-2 top-2 z-10 opacity-0 shadow-lg hover:cursor-pointer group-hover:opacity-100"
-          />
-        )}
-      </IconContext.Provider>
-    </div>
+      {sessionData &&
+        <IconContext.Provider value={{ color: "white", size: "27px" }}>
+          {showModal ? (
+            <AiOutlineClose
+              onClick={toggleModal}
+              className="absolute right-2 top-2 z-30 shadow-lg hover:cursor-pointer"
+            />
+          ) : (
+            <AiOutlineDown
+              onClick={toggleModal}
+              className="absolute right-2 top-2 z-10 opacity-0 shadow-lg hover:cursor-pointer group-hover:opacity-100"
+            />
+          )}
+        </IconContext.Provider>
+      } 
+    </motion.div>
   );
 };
 

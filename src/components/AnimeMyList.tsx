@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
@@ -67,6 +67,7 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
           fill={true}
           sizes="(max-width: 640px) 100vw, 640px"
           priority={true}
+          className="rounded"
         />
         {/* </Link> */}
         {showModal && (
@@ -112,14 +113,13 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
           </div>
         )}
       </div>
-      <div className="flex-column absolute inset-0 h-full w-full items-start justify-start bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
+      <Link href={`/details/${anime.malID}`} className="flex-column absolute inset-0 h-full w-full items-start justify-start bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
         {!showModal && (
           <p className="ml-2 mr-12 mt-2 object-contain font-bold text-white">
             {anime.titleEn}
           </p>
         )}
-      </div>
-
+      </Link>
       <IconContext.Provider value={{ color: "white", size: "27px" }}>
         {showModal ? (
           <AiOutlineClose
