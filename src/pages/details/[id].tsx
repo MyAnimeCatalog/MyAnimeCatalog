@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { type AnimeType, type DataType } from "../../types";
+
 
 const Details = () => {
   const [ anime, setAnime ] = useState<AnimeType | null>(null);
@@ -24,11 +26,25 @@ const Details = () => {
     void getAnimeDetails();
   }, [id]);
   return(
-    <main className = 'h-screen w-screen flex flex-col justify-center items-center'>
+    <main className = 'h-screen w-screen flex flex-col justify-center items-center text-white bg-gradient-to-b from-[#2e026d] to-[#15162c]'>
       <p className = 'text-black'>Anime: {id}</p>
       {anime && 
-      <p className = 'text-black'>{anime.title}</p>
-      
+      <>
+        <Image 
+          src = {anime.images.jpg.image_url}
+          alt = "anime image"
+          height = {500}
+          width = {200}
+        />
+        <p>
+          {anime.title_english}
+          <br/>
+          {anime.title}
+        </p>
+        <span><strong>Rank:</strong> {anime.rank} </span>
+        <span><strong>Score:</strong> {anime.score} (Scored by <em>{anime.scored_by}</em> members) </span>
+        <p className = 'w-1/2 flex-wrap'>{anime.synopsis}</p>
+      </>
       }
     </main>
   );

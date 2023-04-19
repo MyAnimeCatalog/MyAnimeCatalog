@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { type AnimeType, type topAnimes } from "~/types";
 import { ClipLoader } from "react-spinners";
 import Anime from "~/components/Anime";
-import naruto from "../../public/naruto.gif";
+// import naruto from "../../public/naruto.gif";
+// import Image from 'next/image';
 
 const WeeklySchedule: NextPage = () => {
   const [animes, setAnimes] = useState<AnimeType[]>([]);
@@ -49,20 +50,36 @@ const WeeklySchedule: NextPage = () => {
         </h2>
         <div className="container flex w-[1000px] flex-wrap items-center justify-center gap-12 px-4 py-6 md:overflow-auto">
           {animes.length > 0 ? (
-            <img
-              src={naruto}
-              alt="Loading icon"
-              style={{ display: "block", margin: "0 auto" }}
-            />
+            // <img
+            //   src={naruto}
+            //   alt="Loading icon"
+            //   style={{ display: "block", margin: "0 auto" }}
+            // />
+
+            animes.map((anime) => <Anime key={anime.mal_id} anime={anime} />)
           ) : (
-            // animes.map(anime => (
-            //   <Anime key = {anime.mal_id} anime = {anime}/>
-            // ))
-            <img
-              src={naruto}
-              alt="Loading icon"
-              style={{ display: "block", margin: "0 auto" }}
-            />
+            // <ClipLoader color="white" />
+
+            // <Image
+            //   src="/naruto.gif"
+            //   alt="Loader icon"
+            //   width={500}
+            //   height={500}
+            // />
+            <ClipLoader color="white" />
+
+            // <img
+            //   src={naruto.toString()}
+            //   alt="Loading icon"
+            //   style={{ display: "block", margin: "0 auto" }}
+            // />
+
+            // <Image
+            //   src="/naruto.gif"
+            //   alt="Loader icon"
+            //   width={500}
+            //   height={500}
+            // />
           )}
         </div>
       </main>
