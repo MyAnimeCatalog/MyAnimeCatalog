@@ -92,7 +92,7 @@ const Details = () => {
 
   }, [id]);
 
-  const addToCollection = async (): void => {
+  const addToCollection = async () => {
     const newAnime = await mutate({
       titleEn: anime!.title,
       titleJP: anime!.title_english,
@@ -166,10 +166,10 @@ const Details = () => {
           {sessionData && 
           <>
             {addToList ? 
-              <button className='bg-slate-400 py-0.5 px-1 rounded hover:bg-slate-600' onClick={addToCollection}>Add to List</button> : 
+              <button className='bg-slate-400 py-0.5 px-1 rounded hover:bg-slate-600' onClick={void addToCollection}>Add to List</button> : 
               <div className = 'text-black'>
                 <label className = 'text-white mr-5 font-semibold text-lg' htmlFor="Add-to-List">Change Category:</label>
-                <select name="Add-to-List" onChange={(e) => updateCollection(e)} value={category}>
+                <select name="Add-to-List" onChange={(e) => void updateCollection(e)} defaultValue={category}>
                   <option value="toWatch">
                     To Watch
                   </option>
