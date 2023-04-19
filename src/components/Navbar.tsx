@@ -12,23 +12,23 @@ const NavBar = () => {
   const { data: sessionData } = useSession();
   return (
     <div className="text-gray-900 fixed z-40 flex h-16 w-screen items-center justify-around bg-slate-200">
-      <div className = "flex items-center justify-around w-2/3 xl:w-3/5">
+      <div className = "flex items-center justify-center w-full xl:w-3/5">
         <Link
           href="/"
-          className="font-semibold text-black no-underline transition hover:underline hidden lg:block"
+          className="font-semibold text-black no-underline transition hover:underline hidden navBig:block px-12"
         >
           Home
         </Link>
         <Link
           href="/DailySchedule"
-          className="font-semibold text-black no-underline transition hover:underline hidden lg:block"
+          className="font-semibold text-black no-underline transition hover:underline hidden navBig:block px-12"
         >
           {"Showing Today"}
         </Link>
         {sessionData ? (
           <Link
             href="/MyList"
-            className="font-semibold text-black no-underline transition hover:underline hidden lg:block"
+            className="font-semibold text-black no-underline transition hover:underline hidden navBig:block px-12"
           >
             My List
           </Link>
@@ -58,7 +58,7 @@ const AuthShowcase: React.FC = () => {
   }, [sessionData, router]);
 
   return (
-    <div className="flex items-center justify-center gap-4 z-50">
+    <div className="flex items-center justify-center gap-4 z-50 px-12">
       {sessionData && (
         <span>
           Welcome,{" "}

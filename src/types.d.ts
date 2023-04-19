@@ -22,11 +22,11 @@ export interface AnimeType {
   title_english: string;
   images: images;
   mal_id: number;
-  synopsis: string;
+  synopsis: string | null;
   rating: string;
-  genres: genres;
-  score: number;
-  scored_by: number;
+  genres: genres | null;
+  score: number | null;
+  scored_by: number | null;
   rank: number;
 }
 
@@ -87,11 +87,11 @@ export type MyListAnimeDataTypes = {
   titleJP: string | null;
   image: string;
   malID: string;
-  synopsis: string;
+  synopsis: string | null;
   rating: string;
-  genre: string;
-  score: float;
-  scored_by: number;
+  genre: string | null;
+  score: float | null;
+  scored_by: number | null;
   rank: number;
 };
 

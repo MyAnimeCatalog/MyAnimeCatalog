@@ -14,7 +14,7 @@ export const HamburgerMenu = () => {
       initial={false}
       animate={isOpen ? "open" : "closed"}
       ref={containerRef}
-      className = 'fixed top-6 lg:hidden'
+      className = 'fixed top-6 navBig:hidden'
     >
       <MenuToggle toggle={() => toggleOpen()} />
       <Navigation isOpen = {isOpen} toggle={() => toggleOpen()}  />

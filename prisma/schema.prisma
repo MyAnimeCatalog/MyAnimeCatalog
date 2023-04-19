@@ -70,11 +70,11 @@ model Anime {
   titleJP   String? 
   image     String
   malID     String
-  synopsis  String @db.Text
+  synopsis  String? @db.Text
   rating    String
-  genre     String
-  score     Decimal
-  scored_by Int
+  genre     String?
+  score     Decimal?
+  scored_by Int?
   rank      Int
   toWatch   ToWatch[]
   watching  Watching[]
