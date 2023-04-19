@@ -31,7 +31,13 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
   return (
     <div className="group relative h-64 w-48 select-none">
       <Link href={`/details/${anime.mal_id}`}>
-        <Image src={anime.images.jpg.image_url} alt="anime image" fill={true} />
+        <div className = 'relative h-64 w-48'>
+          <Image src={anime.images.jpg.image_url} alt="anime image" 
+            fill={true} 
+            sizes="(max-width: 640px) 100vw, 640px"
+            priority = {true}
+          />
+        </div>
         <div className="flex-column absolute inset-0 h-full w-full items-start justify-start bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
           {!showModal && (
             <p className="ml-2 mr-12 mt-2 object-contain font-bold text-white">
