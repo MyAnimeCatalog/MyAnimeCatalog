@@ -69,15 +69,13 @@ For styling, we chose Tailwind CSS because of the fast workflow, especially when
 
 ### Daily Schedule
 
-🟣
-
-🟣
+🟣 
 
 ### Authentication
 
-🟣
+🟣 My Anime Catalog uses Google and Discord OAuth to handle authentication.  We chose this method of authentication because it improves user experience, allowing users to sign in without manually creating a new account.  It also allows users to grant access to their data without sharing their passwords or other sensitive information, minimzing serious security concerns like password leaks.
 
-🟣
+🟣 
 
 ### My List
 
