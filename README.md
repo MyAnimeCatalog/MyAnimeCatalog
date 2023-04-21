@@ -63,20 +63,14 @@ For styling, we chose Tailwind CSS because of the fast workflow, especially when
 
 ### Home Page
 
-
-
 https://user-images.githubusercontent.com/35904733/233545865-415c443a-e672-4b2b-88cb-08bc03814de2.mov
-
 
 
 https://user-images.githubusercontent.com/35904733/233545653-bdbbe281-3d31-46ac-8eef-bfbc947ae2ea.mov
 
+🟣 The home page allows users to browse the top seasonal anime, which is fetched from the Jikan API.  If you want to search an anime, simply search using the search bar at the bottom of the page and press enter.
 
-
-
-🟣 
-
-🟣
+🟣 When an anime card is hovered, the name of the anime is displayed.  You can click on a card to access a details page for that specific anime!
 
 ### Daily Schedule
 
@@ -84,8 +78,7 @@ https://user-images.githubusercontent.com/35904733/233545653-bdbbe281-3d31-46ac-
 https://user-images.githubusercontent.com/35904733/233545894-7cd8e434-029a-4bb9-bf4a-b593bbe92c5a.mov
 
 
-
-🟣 
+🟣 This page is very similar to the home page, but provides info on animes that are airing live today!
 
 ### Authentication
 
@@ -95,14 +88,11 @@ https://user-images.githubusercontent.com/35904733/233545987-02def753-bb2f-4ed0-
 
 🟣 My Anime Catalog uses Google and Discord OAuth to handle authentication.  We chose this method of authentication because it improves user experience, allowing users to sign in without manually creating a new account.  It also allows users to grant access to their data without sharing their passwords or other sensitive information, minimzing serious security concerns like password leaks.
 
-🟣 
+🟣 When users are not logged in, the profile & my list features are disabled.  If a session expires or a user logs out and they are on a page they should not have access to, they are rerouted to the home page.
 
 ### My List
 
-
-
 https://user-images.githubusercontent.com/35904733/233546248-694d62e8-8f91-4b2a-be01-ad93dd0e5eba.mov
-
 
 
 https://user-images.githubusercontent.com/35904733/233546223-4e8cf201-7562-4fef-ab24-2b246f967e77.mov
@@ -116,13 +106,10 @@ https://user-images.githubusercontent.com/35904733/233546435-f0ebaa84-7e15-4eec-
 https://user-images.githubusercontent.com/35904733/233546542-08bf14d9-cefa-4b94-9439-8b1e6283afda.mov
 
 
+🟣 Once logged in, you will have access to the "My List" feature of the site!  From any of the pages, feel free to add animes to your lists, delete animes, or move them around to different lists.
 
-🟣
-
-🟣
 
 ### Profile
-
 
 
 https://user-images.githubusercontent.com/35904733/233546797-bfc0d088-d27d-4843-bfcd-d73d32b16ecd.mov
@@ -131,10 +118,9 @@ https://user-images.githubusercontent.com/35904733/233546797-bfc0d088-d27d-4843-
 https://user-images.githubusercontent.com/35904733/233546731-7cc9f439-c356-47fb-9da4-fc2ec64640af.mov
 
 
+🟣 On the profile page, you can view the number of animes in each of their lists and interact with it using the doughnut graph.
 
-🟣
-
-🟣
+🟣 You can also edit your profile picture and bio, which is saved in the database!
 
 ## Contributing
 
