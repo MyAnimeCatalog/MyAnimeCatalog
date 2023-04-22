@@ -62,7 +62,7 @@ We built this application with typesafety in mind! From the client to the databa
 
 For styling, we chose Tailwind CSS because of the fast workflow, especially when building mobile-friendly applications.  Built in screen breakpoints make it easy to define different styles for varying screen sizes.  If you value speed, consistency, and flexibility in their CSS workflow without the need to write CSS in a separate file or defining classess/IDs for the purpose of styling it's definitely worth checking out Tailwind CSS!
 
-Check the links above or the <a href = "editorial#>editorial</a> if you are interested in learning more about any of the tools we used
+Check the links above or the <a href = "#Editorial">editorial</a> if you are interested in learning more about any of the tools we used
 
 ## Features
 
