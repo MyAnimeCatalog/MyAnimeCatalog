@@ -58,7 +58,6 @@ Make sure you make your own .env file and fill it with the variables found in th
 
 We built this application with typesafety in mind! From the client to the database, everything is typed and we chose our tech stack to accomplish this! As devs, the experience using these tools is also amazing.  When using APIs on the frontend, IntelliSense helps us autocomplete fields for efficient workflow and type errors are quickly caught before compile time.
 
-</br>
 
 For styling, we chose Tailwind CSS because of the fast workflow, especially when building mobile-friendly applications.  Built in screen breakpoints make it easy to define different styles for varying screen sizes.  If you value speed, consistency, and flexibility in their CSS workflow without the need to write CSS in a separate file or defining classess/IDs for the purpose of styling it's definitely worth checking out Tailwind CSS!
 
@@ -160,7 +159,59 @@ https://user-images.githubusercontent.com/35904733/233546731-7cc9f439-c356-47fb-
 
 ### Editorial
 
-<hr>
+If you're reading this, you're probably interested in the design choices behind the tech stack we chose and possibly want to implement parts (or the whole stack) to your next project!  Let's dive right into it!
+
+If you want to quickly get started with this end-to-end TypeSafe tech stack, a great place to start is <a href = "https://create.t3.gg/">here</a>.  Create T3 App lets you pick and choose different pieces of the stack and is a great way to get up and running with a brand new project quickly.  There's also some great documentation going into the design choices behind the T3 stack and more details on each technology <a href = "https://create.t3.gg/en/introduction">here</a>!
+
+We chose this stack as open source developers that believe in TypeScript.  We're all React developers and found that the unopinionated nature of React (Which can also be great because it allows us to be flexible) can often times make it harder to collaborate.  Everyone has a little bit of a different way to approach writing their code.  We found that TypeScript can help with this problem a little bit, by at least providing guidance with types.  We like to think of types as guard rails that can potentially prevent you from making type related errors before compile time and help streamline the debugging process.  This is the driving force behind why we wanted to use TypeScript and make a completely typesafe application: it helps us collaborate!
+
+A lot of the technologies that we used are all built to reinforce type safety within the app, which makes it more readable and robust!
+
+<br/>
+
+## Next.js
+
+<br/>
+
+We chose Next.js for a couple of reasons.  The first is to optimize performance on all types of devices, especially low performance devices.  Next.js leverages server-side rendering, which allows web pages to be pre-rendered on the server and sent to the browser as fully-formed HTML, CSS, and JavaScript (A lot of the load is on the server, rather than the device).  Additionally, we utilized the Next Image component, which takes advantage of lazy loading (images are only loaded when they are visible) and automatically optimizes images based on screen size.
+
+We also love the developer experience generating routes in Next.js.  It's really easy to generate static and dynamic routes (we used both in this application) without much setup.
+
+Next.js projects are structured as a monorepo, which also makes it easy to implement tRPC which we will talk about next.  It's also really easy to deploy fullstack Next.js projects using <a href = "https://vercel.com/">Vercel</a>.  Overall it's a great developer experience and a nice framework for creating production ready applications.  Even the new React docs recommend it!
+
+<br/>
+
+## tRPC
+
+<br/>
+
+tRPC is an amazing tool that we can use to build typesafe APIs. tRPC makes your front-end and back-end feel really close to each other and the transition between writing front-end and back-end code feels seamless.  As you're consuming your APIs on the front-end, IntelliSense helps you autocomplete fields to make consumption fast.  While you're passing arguments into the APIs, type errors are generated before you even run your code!  The developer experience with tRPC has been great so far, we would highly suggest trying it out if you use TypeScript in your front and back-end code.
+
+<br/>
+
+## Prisma
+
+<br/>
+
+Prisma pairs really nicely with tRPC by generating typesafe schemas.  It's a great tool if you plan on using tRPC and comes with some really nice extras!  Prisma Studio is a GUI that allows you to interact with your database quickly, we found it to be an essential tool for visualizing our data.  You can also make intuitive queries that help streamline the process of writing SQL queries, although we did find that we enjoyed using vanilla SQL better sometimes for complex queries.  
+
+We think if you plan on using tRPC in a fresh project, Prisma is a great addition and pairs well.
+
+<br/>
+
+## Tailwind CSS
+
+<br/>
+
+Like we said earlier, Tailwind makes building user interfaces quick, while also giving developers a lot of control over the fine details of their styling.  We chose Tailwind specifically because it makes building mobile applications much easier.  With built in screen breakpoints and the option to add custom screen breakpoints, writing CSS to make the user experience consistent across all screen sizes was made much easier.  It does have some drawbacks, the main one we noticed being JSX pollution (your JSX becomes cluttered at times), but we think it's worth a shot if you haven't tried it out yet!
+
+<br/>
+
+## NextAuth.js
+
+<br/>
+
+OAuth provides a great solution for authentication that allows applications to access user data from another web application or service, without requiring the user to share their login credentials.  NextAuth is an awesome tool that makes implementing OAuth quick and easy.  We've also looked into <a href = "https://clerk.com/">Clerk</a> and think that's another great solution.  If you're thinking of implementing OAuth in your Next.js project, we would highly recommend either of these tools!
 
 ## Contributing
 
