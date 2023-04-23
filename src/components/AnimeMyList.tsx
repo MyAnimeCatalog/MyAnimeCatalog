@@ -6,6 +6,7 @@ import { IconContext } from "react-icons";
 import { api } from "~/utils/api";
 import { type MyListAnimeDataProps } from "../types";
 
+//Component for a specific list in the My List page
 const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
   anime,
   activeTab,
@@ -16,15 +17,6 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
   const deleteAnimeApi = api.animes.deleteFromList.useMutation().mutateAsync;
   const updateCategory = api.animes.updateCategory.useMutation().mutateAsync;
 
-  // useEffect(() => {
-  //   changeListHandler(anime, activeTab, clickedCollectionType);
-  // }, [
-  //   deleteAnime,
-  //   updateCategory,
-  //   activeTab,
-  //   clickedCollectionType,
-  //   changeListHandler,
-  // ]);
 
   const handleClickUpdate = async (
     collectionType: string,
@@ -38,8 +30,6 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
     if (newAnime !== undefined && newAnime !== null){
       changeListHandler(newAnime, collectionType, newCollectionType);
     }
-
-    // changeListHandler(newAnime.result.result.data, collectionType, newCollectionType);
   };
 
 
@@ -60,7 +50,6 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
   return (
     <div className="group relative h-64 w-48 select-none">
       <div className="relative h-64 w-48">
-        {/* <Link href={`/details/${anime.malID}`}> */}
         <Image
           src={anime.image}
           alt="anime image"
@@ -69,7 +58,6 @@ const AnimeMyList: React.FC<MyListAnimeDataProps> = ({
           priority={true}
           className="rounded"
         />
-        {/* </Link> */}
         {showModal && (
           <div className="absolute z-20 h-1/2 w-full bg-black opacity-80">
             <ul className="px-4 py-3 text-white">

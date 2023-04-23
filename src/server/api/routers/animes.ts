@@ -116,10 +116,12 @@ export const animeRouter = createTRPCRouter({
       }
     }),
 
+  //This gets a specific list for a user
   getList: protectedProcedure
     .input(z.string())
     .query(async ({ input, ctx }) => {
       let list: { animeId: string }[];
+      //Check which list we are getting and query the animes for that list
       if (input === "toWatch") {
         list = await ctx.prisma.toWatch.findMany({
           where: {
@@ -151,18 +153,21 @@ export const animeRouter = createTRPCRouter({
           },
         });
       }
+      //these are the animes we need to look for in the anime table and return as a result
       const animeIds: string[] = [];
       list.forEach((object) => {
         animeIds.push(object.animeId);
         //animeId -> anime table: id
       });
+      //Return all of the animes for the list we entered as an input
       return await ctx.prisma.anime.findMany({
         where: {
           id: { in: animeIds },
         },
       });
     }),
-
+  
+  //This handles moving animes to different lists
   updateCategory: protectedProcedure
     .input(
       z.object({
@@ -172,6 +177,8 @@ export const animeRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      //Check which lists we want to update
+      //delete the anime from the current list and make a new entry in the new list for that anime
       if (input.collectionType === "toWatch") {
         const animeToDelete = await ctx.prisma.toWatch.findFirst({
           where: {

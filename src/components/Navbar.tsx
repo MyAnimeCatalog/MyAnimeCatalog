@@ -7,7 +7,7 @@ import { HamburgerMenu } from "./HashMenu/HamburgerMenu";
 import { AiFillGithub } from "react-icons/ai";
 import { IconContext } from "react-icons";
 
-
+//Navbar, notice the styling changes based on screen size.  Check tailwind.config.ts for details on custom screen breakpoints
 const NavBar = () => {
   const { data: sessionData } = useSession();
   return (

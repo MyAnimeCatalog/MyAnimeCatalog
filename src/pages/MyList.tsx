@@ -25,10 +25,12 @@ const pageVariants = {
 };
 
 const MyList: NextPage = () => {
+  //Get all list data for specific user
   const toWatchData = api.animes.getList.useQuery(`toWatch`).data;
   const watchingData = api.animes.getList.useQuery(`watching`).data;
   const watchedData = api.animes.getList.useQuery(`watched`).data;
 
+  //State for lists
   const [toWatchList, setToWatchList] = useState<MyListAnimeDataTypes[]>(
     toWatchData ? toWatchData : []
   );
@@ -39,8 +41,10 @@ const MyList: NextPage = () => {
     watchedData ? watchedData : []
   );
 
+  //Currently active tab to decide which list to show
   const [activeTab, setActiveTab] = useState("toWatch");
-
+  
+  //This function handles updating a list (moving an anime from one list to another)
   const changeListHandler = (
     anime: MyListAnimeDataTypes,
     activeT: string,
@@ -61,6 +65,7 @@ const MyList: NextPage = () => {
     }
   };
 
+  //This handles deleting an anime from a list
   const deleteAnime = (
     animeId: string,
     activeT: string
@@ -70,6 +75,7 @@ const MyList: NextPage = () => {
     else if (activeT === "watched") return setWatchedList(watchedList.filter((a) => a.id !== animeId));
   };
 
+  //This sets the initial states for the anime states
   useEffect(() => {
     // let newAnimeList: JSX.Element[] = [];
 
@@ -85,6 +91,7 @@ const MyList: NextPage = () => {
     watchedData,
   ]);
 
+  //Set active tab when you click the tab
   const clickedToWatchHandler = (): void => {
     setActiveTab("toWatch");
   };

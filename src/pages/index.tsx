@@ -24,12 +24,14 @@ const pageVariants = {
 };
 
 const Home: NextPage = () => {
-  const [topSeasonAnimes, setTopSeasonAnimes] = useState<AnimeType[]>([]);
+  //State for top animes, searched animes, and the results to search for
+  const [ topSeasonAnimes, setTopSeasonAnimes ] = useState<AnimeType[]>([]);
   const [ searchAnimes, setSearchAnimes ] = useState<AnimeType[]>([]);
-  const [enteredSearch, setEnteredSearch] = useState(``);
+  const [ enteredSearch, setEnteredSearch ] = useState(``);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  //On page load, fetch the top seasonal animes and set the state
   useEffect((): void => {
     const getTopSeasonAnimes = async (): Promise<void> => {
       try {
@@ -48,6 +50,7 @@ const Home: NextPage = () => {
     void getTopSeasonAnimes();
   }, []);
 
+  //Loading bar can be any of these gifs
   const loadingBar = (): string => {
     // Idealy these assets SHOULD be stored on AWS (or alternative) to avoid link breaking and so on
     const runningGifs = [
@@ -69,6 +72,7 @@ const Home: NextPage = () => {
     return runningGifs[Math.floor(Math.random() * runningGifs.length)] || "";
   };
 
+  //On search submit, search for animes by the name entered in the search bar
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     let str = enteredSearch;
@@ -91,6 +95,7 @@ const Home: NextPage = () => {
     void searchAnime();
   };
 
+  //Change the searchState on inputChange
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredSearch(e.target.value);
   };
@@ -143,10 +148,11 @@ const Home: NextPage = () => {
               value={enteredSearch}
               ref={inputRef}
             />
-
+            {searchAnimes.length > 0 &&
             <div className="container flex flex-wrap items-center justify-center gap-12 rounded bg-slate-300 bg-opacity-20 px-40 py-6 ">
-              {searchAnimes.length > 0 && searchAnimes.map((anime) => <Anime key = {anime.mal_id} anime = {anime}/>)}
+              {searchAnimes.map((anime) => <Anime key = {anime.mal_id} anime = {anime}/>)}
             </div>
+            }
           </form>
         </section>
         }

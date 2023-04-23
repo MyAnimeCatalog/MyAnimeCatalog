@@ -2,7 +2,7 @@ import { type MyListAnimeDataProps } from "~/types";
 import AnimeMyList from "./AnimeMyList";
 import { useState } from "react";
 
-
+//List item, which shows some anime details
 const MyListItem: React.FC<MyListAnimeDataProps> = ({
   anime,
   activeTab,

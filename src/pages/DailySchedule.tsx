@@ -21,10 +21,11 @@ const pageVariants = {
     },
   },
 };
-
+//This page is basically the same as the Index page, check there for more comments
 const DailySchedule: NextPage = () => {
   const [animes, setAnimes] = useState<AnimeType[]>([]);
 
+  //Fetch today's animes
   useEffect((): void => {
     const getWeeklySchedule = async (): Promise<void> => {
       try {

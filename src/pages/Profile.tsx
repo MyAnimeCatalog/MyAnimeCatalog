@@ -30,6 +30,7 @@ const pageVariants = {
 };
 
 const Profile: NextPage = () => {
+  //get all data for user's anime lists & profile info (could also use useSession hook for some of this)
   const user = api.users.getInfo.useQuery().data;
   const watched = api.animes.getList.useQuery("watched").data;
   const watchedNum = watched ? watched.length : 0;
@@ -38,17 +39,21 @@ const Profile: NextPage = () => {
   const watching = api.animes.getList.useQuery("watching").data;
   const watchingNum = watching ? watching.length : 0;
 
+  //Image states
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [pfpImage, setPfpImage] = useState<string>("");
   const [userImage, setUserImage] = useState<string>("");
 
+  //Bio states
   const [showBioModal, setShowBioModal] = useState<boolean>(false);
   const [bio, setBio] = useState<string>("");
   const [userBio, setUserBio] = useState<string>("");
 
+  //use these to update Bio & picture in the DB
   const { mutate } = api.users.updateBio.useMutation();
   const updatePicture = api.users.updatePicture.useMutation().mutate;
 
+  //Set user bio and image initially
   useEffect(() => {
     if (user) {
       if (user.bio) setUserBio(user.bio);
@@ -58,6 +63,7 @@ const Profile: NextPage = () => {
     }
   }, [user]);
 
+  //Submit for bio change
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate({ bio: bio });
@@ -65,6 +71,7 @@ const Profile: NextPage = () => {
     setShowBioModal(false);
   };
 
+  //Submit for picture change
   const editPicture = (e: React.MouseEvent) => {
     e.preventDefault();
     updatePicture({ image: pfpImage });

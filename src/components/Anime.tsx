@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 
 import { AnimatePresence } from "framer-motion";
 
+//This component is an Anime Card that shows up on the UI (e.g home page)
 const Anime: React.FC<animeProps> = ({ anime }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { mutate } = api.animes.addAnimeToCollection.useMutation();
@@ -19,6 +20,7 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
     setShowModal(!showModal);
   };
 
+  //Add a new anime to a list
   const handleClickAdd = (collectionType: string): void => {
     mutate({
       titleEn: anime.title,
@@ -55,6 +57,7 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
           priority={true}
           className="rounded"
         />
+        {/* Dropdown menu activated, give the user options to add to their lists */}
         {showModal && (
           <div className="absolute z-20 h-1/2 w-full bg-black opacity-80">
             <ul className="px-4 py-3 text-white">
@@ -79,16 +82,19 @@ const Anime: React.FC<animeProps> = ({ anime }) => {
             </ul>
           </div>
         )}
+        {/* Link to redirect to a details page showing more info for an anime */}
         <Link
           href={`/details/${anime.mal_id}`}
           className="flex-column absolute inset-0 z-10 h-full w-full items-start justify-start bg-black bg-opacity-50 opacity-0 group-hover:opacity-100"
         >
+          {/* When you hover over the anime card, a slightly transparent gray background shows up w/ anime title */}
           {!showModal && (
             <p className="ml-2 mr-12 mt-2 object-contain font-bold text-white">
               {anime.title}
             </p>
           )}
         </Link>
+        {/* Only allow user to see dropdown option if they are logged in */}
         {sessionData &&
           <IconContext.Provider value={{ color: "white", size: "27px" }}>
             {showModal ? (
