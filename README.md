@@ -29,6 +29,8 @@
 
 <hr>
 
+## My Anime Catalog is no longer maintined
+
 ## What is My Anime Catalog?
 
 My Anime Catalog is a simple application, built for you to quickly keep up to date with the most recent popular animes! Within the application, you can organize animes you have watched, plan to watch, and are in the process of watching.  You can view details on animes, search animes, view popular seasonal animes, & check the animes playing today!  We designed it as a mobile-friendly website, bring My Anime Catalog with you anywhere 🎆
