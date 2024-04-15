@@ -29,7 +29,7 @@
 
 <hr>
 
-## My Anime Catalog is no longer maintined
+## My Anime Catalog is no longer maintained
 
 ## What is My Anime Catalog?
 
