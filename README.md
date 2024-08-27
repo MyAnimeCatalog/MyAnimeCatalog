@@ -37,7 +37,6 @@ My Anime Catalog is a simple application, built for you to quickly keep up to da
 
 ## Getting Started
 
-If you want to try out My Anime Catalog, check it out <a href = "https://my-anime-catalog.vercel.app/">here</a>!
 
 If you are interested in contributing to My Anime Catalog, fork and clone this repo.  Navigate to the root directory and install the dependencies 
 e.g:
